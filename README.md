@@ -21,5 +21,6 @@
 - It has fascinated me how waiters are able to keep track of all the moving parts of a restaurant
 - I wanted to code a program that would do exactly that, keep track of tables and customers
 - I thought it would be interesting to combine a budget tracking program with a program that keeps track of items
-- Because of the pandemic, I wanted to have a program that keeps track of cleaning status as that is relevant to the time
+- Because of the pandemic, I wanted to make a program that keeps track of cleaning status as that is relevant to the time
 
+ 
