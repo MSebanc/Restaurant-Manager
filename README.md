@@ -26,7 +26,7 @@
 - I thought it would be interesting to combine a budget tracking program with a program that keeps track of items
 - Because of the pandemic, I wanted to make a program that keeps track of cleaning status as that is relevant to the time
 
-###User Stories
+### User Stories
 
 - As a user, I want to add tables of different sizes to my restaurant
 - As a user, I want to remove tables of different sizes from my restaurant
