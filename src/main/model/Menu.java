@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// Represents a menu with a list of food
 public class Menu {
 
     private List<Food> menu;

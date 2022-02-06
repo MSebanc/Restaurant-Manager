@@ -1,5 +1,6 @@
 package model;
 
+// Represents a bill with cost, tip, and a pay status. Also has a set tax amount.
 public class Bill {
 
     private static final Double TAX = 0.05;

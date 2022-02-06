@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// Represents a restaurant with tables, menu, count of total customers, tips (in dollars), and earnings (in dollars)
 public class Restaurant {
 
     private Menu menu;

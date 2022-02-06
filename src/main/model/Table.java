@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// Represents a table with clean, set, availability, and food delivery statuses as well as a name, max occupancy, Bill,
+// and lists for cleaning history, delivery history, and purchase history
 public class Table {
 
 
