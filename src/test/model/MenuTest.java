@@ -3,9 +3,6 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MenuTest {
@@ -27,5 +24,6 @@ public class MenuTest {
         assertEquals(4.00, testMenu.getFoodPrice("Single Burger"));
         assertEquals(5.50, testMenu.getFoodPrice("Double Cheeseburger"));
         assertEquals(2.50, testMenu.getFoodPrice("Seasonal Lemonade"));
+        assertEquals(1.75, testMenu.getFoodPrice("Soda"));
     }
 }
