@@ -24,5 +24,6 @@ public class MenuTest {
         for (Food food: testMenu.getMenu()) {
             assertEquals(food.getPrice(), testMenu.getFoodPrice(food.getName()));
         }
+        assertEquals(0.00, testMenu.getFoodPrice("Does not meet if statement"));
     }
 }
