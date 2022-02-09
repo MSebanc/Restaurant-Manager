@@ -36,8 +36,8 @@ public class Restaurant {
     // EFFECTS: removes table with given name from list of tables
     public void removeTable(String name) {
         int index = 0;
-        for (Table table: tables) {
-            if (Objects.equals(table.getName(), name)) {
+        for (Table table : tables) {
+            if (Objects.equals(table.getName().toLowerCase(), name.toLowerCase())) {
                 tables.remove(index);
                 break;
             }
@@ -48,20 +48,20 @@ public class Restaurant {
     // REQUIRES: partySize > 0
     // MODIFIES: this, Table
     // EFFECTS: if there is an available table with max size = party size or max size > party size and
-    // availability status is true, party size is added to total customers, occupyTable() is called on Table,
-    // and table name is returned. Otherwise, returns "No Table"
+    // table is valid to have someone occupying it, party size is added to total customers, occupyTable() is
+    // called on Table, and table name is returned. Otherwise, returns "No Table"
     public String assignCustomers(int partySize) {
         String assigned = "No Table";
-        for (Table table: tables) {
-            if (partySize == table.getMaxOccupancy() && table.getAvailabilityStatus()) {
+        for (Table table : tables) {
+            if (partySize == table.getMaxOccupancy() && validStatuses(table)) {
                 totalCustomers += partySize;
                 table.occupyTable();
                 assigned = table.getName();
             }
         }
         if (Objects.equals(assigned, "No Table")) {
-            for (Table table: tables) {
-                if (partySize < table.getMaxOccupancy() && table.getAvailabilityStatus()) {
+            for (Table table : tables) {
+                if (partySize < table.getMaxOccupancy() && validStatuses(table)) {
                     totalCustomers += partySize;
                     table.occupyTable();
                     assigned = table.getName();
@@ -71,11 +71,16 @@ public class Restaurant {
         return assigned;
     }
 
+    // EFFECTS: return true if table is clean, set, and available
+    public boolean validStatuses(Table table) {
+        return (table.getCleanStatus() && table.getSetStatus() && table.getAvailabilityStatus());
+    }
+
     // REQUIRES: name !null, name is in list of tables
     // EFFECTS: returns table with given name
     public Table findTable(String name) {
         Table foundTable = null;
-        for (Table table: tables) {
+        for (Table table : tables) {
             if (Objects.equals(table.getName(), name)) {
                 foundTable = table;
             }
@@ -84,7 +89,7 @@ public class Restaurant {
     }
 
     // REQUIRES: name !null, name is in list of tables
-    // MODIFIES: this, Table, Bill
+    // MODIFIES: this, Table
     // EFFECTS: uses findTable() to get table with given name, calls payForFood() on table and
     // adds amount paid to earnings and amount tipped to tips
     public void tablePay(String name) {
@@ -100,9 +105,10 @@ public class Restaurant {
     // table's bill cost
     public void orderFood(String tableName, String foodName) {
         Table table = findTable(tableName);
-        for (Food food: menu.getMenu()) {
+        for (Food food : menu.getMenu()) {
             if (Objects.equals(food.getName(), foodName)) {
                 table.getBill().addCost(food.getPrice());
+                table.falseDeliveryStatus();
             }
         }
     }

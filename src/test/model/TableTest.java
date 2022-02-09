@@ -26,6 +26,7 @@ public class TableTest {
         assertTrue(testTable.getCleanStatus());
         assertFalse(testTable.getSetStatus());
         assertTrue(testTable.getAvailabilityStatus());
+        assertTrue(testTable.getFoodDeliveryStatus());
         assertEquals("Test Name", testTable.getName());
         assertEquals(5, testTable.getMaxOccupancy());
         assertEquals(testList, testTable.getCleaningHistory());
@@ -63,7 +64,7 @@ public class TableTest {
         assertNull(testTable.getBill());
 
         testTable.cleanTable();
-        testTable.setTable();
+        testTable.trueSetTable();
         testTable.occupyTable();
         testTable.getBill().payBill();
 
@@ -104,7 +105,7 @@ public class TableTest {
         testTable.occupyTable();
         assertFalse(testTable.getAvailabilityStatus());
         assertFalse(testTable.getBill().getPayStatus());
-        assertFalse(testTable.getFoodDeliveryStatus());
+        assertTrue(testTable.getFoodDeliveryStatus());
 
         testTable.deliverFood();
         testTable.getBill().payBill();
@@ -114,7 +115,7 @@ public class TableTest {
         testTable.occupyTable();
         assertFalse(testTable.getAvailabilityStatus());
         assertFalse(testTable.getBill().getPayStatus());
-        assertFalse(testTable.getFoodDeliveryStatus());
+        assertTrue(testTable.getFoodDeliveryStatus());
     }
 
     @Test

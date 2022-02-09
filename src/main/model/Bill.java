@@ -29,11 +29,11 @@ public class Bill {
         cost += amount;
     }
 
-    // REQUIRES: amount > 0 and no more than two decimal places
+    // REQUIRES: amount > 0
     // MODIFIES: this
     // EFFECTS: sets tip to given amount
     public void setTip(Double amount) {
-        tip = amount;
+        tip = Math.round(amount * 100d) / 100d;
     }
 
     // EFFECTS: gets the total cost of the meal by adding the cost of food to the price due to tax and the tip

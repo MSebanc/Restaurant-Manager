@@ -21,14 +21,14 @@ public class Table {
     private List<String> purchaseHistory;
     private Bill bill;
 
-    // EFFECTS: Constructs a table with cleaning status true, set status false, food delivery status false,
+    // EFFECTS: Constructs a table with cleaning status true, set status false, food delivery status true,
     // availability status true, an empty cleaning history, delivery history and purchase history, list, and
     // given max occupancy, bill to null, and sets name to given name
     public Table(int max, String name) {
         this.cleanStatus = true;
         this.setStatus = false;
         this.availabilityStatus = true;
-        this.foodDeliveryStatus = false;
+        this.foodDeliveryStatus = true;
         this.name = name;
         this.maxOccupancy = max;
         this.cleaningHistory = new ArrayList<>();
@@ -61,20 +61,19 @@ public class Table {
 
     // MODIFIES: this, Bill
     // EFFECTS: sets Bill pay status to true and records purchase time in purchase history
-    public Table payForFood() {
+    public void payForFood() {
         LocalDateTime purchaseTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedPurchaseTime = purchaseTime.format(formatter);
         purchaseHistory.add(formattedPurchaseTime);
         bill.payBill();
-        return null;
     }
 
     // MODIFIES: this
-    // EFFECTS: sets availability status to false and creates a new bill and changes food delivery status to false
+    // EFFECTS: sets availability status to false and creates a new bill and changes food delivery status to true
     public void occupyTable() {
         availabilityStatus = false;
-        foodDeliveryStatus = false;
+        foodDeliveryStatus = true;
         bill = new Bill();
     }
 
@@ -90,14 +89,17 @@ public class Table {
     }
 
 
-    // MODIFIES: this
-    // EFFECTS: sets setStatus to true
-    public void setTable() {
+    //setters
+    public void trueSetTable() {
         setStatus = true;
     }
 
+    public void falseDeliveryStatus() {
+        foodDeliveryStatus = false;
+    }
 
     // getters
+
     public Boolean getCleanStatus() {
         return cleanStatus;
     }
@@ -137,6 +139,5 @@ public class Table {
     public Boolean getFoodDeliveryStatus() {
         return foodDeliveryStatus;
     }
-
 
 }
