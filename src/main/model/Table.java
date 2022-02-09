@@ -140,4 +140,9 @@ public class Table {
         return foodDeliveryStatus;
     }
 
+    // setter only for test
+    public void setAvailabilityStatusTrue() {
+        availabilityStatus = true;
+    }
+
 }

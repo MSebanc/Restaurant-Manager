@@ -134,3 +134,4 @@ public class Restaurant {
         return earnings;
     }
 }
+
