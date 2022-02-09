@@ -21,9 +21,8 @@ public class MenuTest {
 
     @Test
     void testGetFoodPrice() {
-        assertEquals(4.00, testMenu.getFoodPrice("Single Burger"));
-        assertEquals(5.50, testMenu.getFoodPrice("Double Cheeseburger"));
-        assertEquals(2.50, testMenu.getFoodPrice("Seasonal Lemonade"));
-        assertEquals(1.75, testMenu.getFoodPrice("Soda"));
+        for (Food food: testMenu.getMenu()) {
+            assertEquals(food.getPrice(), testMenu.getFoodPrice(food.getName()));
+        }
     }
 }
