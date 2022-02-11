@@ -921,7 +921,7 @@ public class RestaurantManager {
                 break;
             case "d":
                 if (allNotHungry()) {
-                    System.out.println("No tables to delivery food to...");
+                    System.out.println("No tables to deliver food to...");
                 } else {
                     deliverFoodTables();
                 }
@@ -970,7 +970,7 @@ public class RestaurantManager {
             }
         }
         if (loop) {
-            System.out.println("Invalid name or no food to delivery to table, please try again");
+            System.out.println("Invalid name or no food to deliver to table, please try again");
         }
         return loop;
     }
@@ -979,7 +979,7 @@ public class RestaurantManager {
     // EFFECTS: processes user input for if the user wants to deliver food to another table
     private void reDeliveryFoodTables() {
         if (allNotHungry()) {
-            System.out.println("No tables to delivery food to, sending you back to food menu...");
+            System.out.println("No tables to deliver food to, sending you back to food menu...");
             System.out.print("Press Enter to Continue:");
             input.next();
         } else {
