@@ -291,8 +291,9 @@ public class RestaurantTest {
         assertEquals(6.00, testRestaurant.findTable("Test Table 1").getBill().getCost());
         assertFalse(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
 
+        testRestaurant.findTable("Test Table 2").getBill().payBill();
         assertEquals(0.00, testRestaurant.findTable("Test Table 2").getBill().getCost());
-        assertFalse(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
+        assertTrue(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
 
         Double totalCost = 0.00;
         for (Food food: testRestaurant.getMenu()) {
@@ -301,6 +302,9 @@ public class RestaurantTest {
             assertEquals(totalCost, testRestaurant.findTable("Test Table 2").getBill().getCost());
             assertFalse(testRestaurant.findTable("Test Table 2").getBill().getPayStatus());
         }
+
+        testRestaurant.orderFood("Test Table 1", "Does not meet if statement");
+        assertEquals(6.00, testRestaurant.findTable("Test Table 1").getBill().getCost());
     }
 
 
