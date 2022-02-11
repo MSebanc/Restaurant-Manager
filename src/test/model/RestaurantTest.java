@@ -281,14 +281,18 @@ public class RestaurantTest {
 
         testRestaurant.orderFood("Test Table 3", "Single Cheeseburger");
         assertEquals(4.50, testRestaurant.findTable("Test Table 3").getBill().getCost());
+        assertFalse(testRestaurant.findTable("Test Table 3").getBill().getPayStatus());
 
         testRestaurant.orderFood("Test Table 3", "Lemonade");
         assertEquals(6.50, testRestaurant.findTable("Test Table 3").getBill().getCost());
+        assertFalse(testRestaurant.findTable("Test Table 3").getBill().getPayStatus());
 
         testRestaurant.orderFood("Test Table 1", "Vegan Burger");
         assertEquals(6.00, testRestaurant.findTable("Test Table 1").getBill().getCost());
+        assertFalse(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
 
         assertEquals(0.00, testRestaurant.findTable("Test Table 2").getBill().getCost());
+        assertFalse(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
     }
 
 

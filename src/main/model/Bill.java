@@ -53,4 +53,9 @@ public class Bill {
     public Boolean getPayStatus() {
         return payStatus;
     }
+
+    // setters
+    public void falsePayStatus() {
+        payStatus = false;
+    }
 }
