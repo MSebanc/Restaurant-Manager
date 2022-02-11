@@ -15,7 +15,7 @@ public class RestaurantManager {
     private Restaurant restaurant;
     private Scanner input;
 
-    // EFFECTS: runs the teller application
+    // EFFECTS: runs the restaurant application
     public RestaurantManager() {
         runRestaurant();
     }
