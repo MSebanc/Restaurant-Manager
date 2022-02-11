@@ -104,7 +104,7 @@ public class Restaurant {
     // REQUIRES: tableName and foodName !null, tableName is in list of tables, foodName is in list of food in menu
     // MODIFIES: Table, Bill
     // EFFECTS: uses findTable() to get table with given name and find food with given name, adds price to
-    // table's bill cost and sets pay status to false
+    // table's bill cost and sets pay status and delivery status to false
     public void orderFood(String tableName, String foodName) {
         Table table = findTable(tableName);
         for (Food food : menu.getMenu()) {

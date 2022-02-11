@@ -282,18 +282,23 @@ public class RestaurantTest {
         testRestaurant.orderFood("Test Table 3", "Single Cheeseburger");
         assertEquals(4.50, testRestaurant.findTable("Test Table 3").getBill().getCost());
         assertFalse(testRestaurant.findTable("Test Table 3").getBill().getPayStatus());
+        assertFalse(testRestaurant.findTable("Test Table 3").getFoodDeliveryStatus());
 
         testRestaurant.orderFood("Test Table 3", "Lemonade");
         assertEquals(6.50, testRestaurant.findTable("Test Table 3").getBill().getCost());
         assertFalse(testRestaurant.findTable("Test Table 3").getBill().getPayStatus());
+        assertFalse(testRestaurant.findTable("Test Table 3").getFoodDeliveryStatus());
 
         testRestaurant.orderFood("Test Table 1", "Vegan Burger");
         assertEquals(6.00, testRestaurant.findTable("Test Table 1").getBill().getCost());
         assertFalse(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
+        assertFalse(testRestaurant.findTable("Test Table 1").getFoodDeliveryStatus());
 
         testRestaurant.findTable("Test Table 2").getBill().payBill();
+        testRestaurant.findTable("Test Table 2").deliverFood();
         assertEquals(0.00, testRestaurant.findTable("Test Table 2").getBill().getCost());
-        assertTrue(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
+        assertTrue(testRestaurant.findTable("Test Table 2").getBill().getPayStatus());
+        assertTrue(testRestaurant.findTable("Test Table 2").getFoodDeliveryStatus());
 
         Double totalCost = 0.00;
         for (Food food: testRestaurant.getMenu()) {
@@ -301,6 +306,7 @@ public class RestaurantTest {
             testRestaurant.orderFood("Test Table 2", food.getName());
             assertEquals(totalCost, testRestaurant.findTable("Test Table 2").getBill().getCost());
             assertFalse(testRestaurant.findTable("Test Table 2").getBill().getPayStatus());
+            assertFalse(testRestaurant.findTable("Test Table 2").getFoodDeliveryStatus());
         }
 
         testRestaurant.orderFood("Test Table 1", "Does not meet if statement");
