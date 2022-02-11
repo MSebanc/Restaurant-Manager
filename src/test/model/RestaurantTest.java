@@ -293,6 +293,14 @@ public class RestaurantTest {
 
         assertEquals(0.00, testRestaurant.findTable("Test Table 2").getBill().getCost());
         assertFalse(testRestaurant.findTable("Test Table 1").getBill().getPayStatus());
+
+        Double totalCost = 0.00;
+        for (Food food: testRestaurant.getMenu()) {
+            totalCost += food.getPrice();
+            testRestaurant.orderFood("Test Table 2", food.getName());
+            assertEquals(totalCost, testRestaurant.findTable("Test Table 2").getBill().getCost());
+            assertFalse(testRestaurant.findTable("Test Table 2").getBill().getPayStatus());
+        }
     }
 
 
