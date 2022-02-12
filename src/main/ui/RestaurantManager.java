@@ -58,7 +58,7 @@ public class RestaurantManager {
 
                 + "\n\nComplete list of prerequisite actions before action can be called:"
                 + "\n\tAdd Table: Nothing"
-                + "\n\tCheck Profit: Nothing"
+                + "\n\tCheck Earnings: Nothing"
                 + "\n\tInfo: Nothing"
                 + "\n\tQuit/Return/Cancel: Nothing"
                 + "\n\tRemove Table: Add Table"
@@ -88,8 +88,8 @@ public class RestaurantManager {
             case "t":
                 doTableCommands();
                 break;
-            case "p":
-                doShowProfit();
+            case "e":
+                doShowEarnings();
                 break;
             case "c":
                 if (notAvailable()) {
@@ -117,7 +117,7 @@ public class RestaurantManager {
         System.out.println("\ta -> add table");
         System.out.println("\tr -> remove table");
         System.out.println("\tt -> table management");
-        System.out.println("\tp -> check profit");
+        System.out.println("\te -> check earnings");
         System.out.println("\tc -> assign customers");
         System.out.println("\ti -> info");
         System.out.println("\tq -> quit");
@@ -301,7 +301,7 @@ public class RestaurantManager {
     }
 
     // EFFECTS: shows amount the restaurant has earned and the amount of tips earned
-    private void doShowProfit() {
+    private void doShowEarnings() {
         System.out.println("\nThe restaurant has made $" + DF.format(restaurant.getEarnings()) + "!");
         System.out.println("There has also been $" + DF.format(restaurant.getTips()) + " in tips!");
 
@@ -1327,8 +1327,8 @@ public class RestaurantManager {
     private void payBill(Table table) {
         System.out.println("\nCost: $" + DF.format(table.getBill().getCost()));
         tips(table);
-        table.payForFood();
-        System.out.println("\nTotal Cost: $" + DF.format(table.getBill().getCost()));
+        restaurant.tablePay(table.getName());
+        System.out.println("\nTotal Cost: $" + DF.format(table.getBill().getTotalCost()));
         System.out.print("\nPress Enter To Continue:");
         input.next();
     }

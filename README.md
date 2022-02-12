@@ -36,8 +36,9 @@
 - As a user, I want to add tables of different sizes to my restaurant
 - As a user, I want to remove tables of different sizes from my restaurant
 - As a user, I want to check if the tables are clean/set and clean/set them if they are not
+- As a user, I want to check the history of when tables were cleaned
 - As a user, I want to assign varying party sizes to the tables where they fit
 - As a user, I want to take customers' drink and food orders when needed
 - As a user, I want to record when the food and drinks were delivered
-- As a user, I want to keep track of the amount owed and when it was paid
+- As a user, I want to bill customers when needed and keep track of when it was paid
  
