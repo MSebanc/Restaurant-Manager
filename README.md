@@ -41,6 +41,6 @@
 - As a user, I want to take customers' drink and food orders when needed
 - As a user, I want to record when the food and drinks were delivered
 - As a user, I want to bill customers when needed and keep track of when it was paid
-- As a user, I want to be able to save my restaurant along with all of its tables to file
-- As a user, I want to be able to load my restaurant along with all of its tables from file
+- As a user, I want to be able to save up to 5 of my restaurants along with all of its tables to file
+- As a user, I want to be able to load up to 5 of my restaurant along with all of its tables from file
  
