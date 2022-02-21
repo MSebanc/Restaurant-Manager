@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.InvalidPartySizeInputException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +39,7 @@ public class Restaurant {
     public void removeTable(String name) {
         int index = 0;
         for (Table table : tables) {
-            if (Objects.equals(table.getName().toLowerCase(), name.toLowerCase())) {
+            if (table.getName().equalsIgnoreCase(name)) {
                 tables.remove(index);
                 break;
             }
@@ -45,32 +47,48 @@ public class Restaurant {
         }
     }
 
-    // REQUIRES: partySize > 0
-    // MODIFIES: this, Table
-    // EFFECTS: if there is an available table with max size = party size or max size > party size and
-    // table is valid to have someone occupying it, party size is added to total customers, occupyTable() is
-    // called on Table, and table name is returned. Otherwise, returns "No Table"
-    public String assignCustomers(int partySize) {
-        String assigned = "No Table";
-        for (Table table : tables) {
-            if (partySize == table.getMaxOccupancy() && validStatuses(table)) {
-                totalCustomers += partySize;
-                table.occupyTable();
-                assigned = table.getName();
-                break;
+    public List<Table> validTables(int partySize) throws InvalidPartySizeInputException {
+        List<Table> validTables = new ArrayList<>();
+
+        for (Table table: tables) {
+            if (table.getMaxOccupancy() >= partySize && validStatuses(table)) {
+                validTables.add(table);
             }
         }
-        if (Objects.equals(assigned, "No Table")) {
-            for (Table table : tables) {
-                if (partySize < table.getMaxOccupancy() && validStatuses(table)) {
-                    totalCustomers += partySize;
-                    table.occupyTable();
-                    assigned = table.getName();
-                    break;
-                }
+
+        if (validTables.isEmpty()) {
+            throw new InvalidPartySizeInputException();
+        }
+
+        return validTables;
+    }
+
+    public Table assignCustomers(List<Table> tables, int partySize) {
+        List<Integer> tableMaxOccupancy = new ArrayList<>();
+
+        for (Table table: tables) {
+            tableMaxOccupancy.add(table.getMaxOccupancy());
+        }
+
+        return findBestTableToAssign(tables, tableMaxOccupancy, partySize);
+    }
+
+    public Table findBestTableToAssign(List<Table> tables, List<Integer> tableMaxOccupancy,
+                                        int partySize) {
+        Table bestTableToAssign = null;
+        int bestTableToAssignInt = Integer.MAX_VALUE;
+        List<Integer> closeToMax = new ArrayList<>();
+        for (int max: tableMaxOccupancy) {
+            closeToMax.add(max - partySize);
+        }
+
+        for (int i: closeToMax) {
+            if (i < bestTableToAssignInt) {
+                bestTableToAssign = tables.get(closeToMax.indexOf(i));
+                bestTableToAssignInt = i;
             }
         }
-        return assigned;
+        return bestTableToAssign;
     }
 
     // EFFECTS: return true if table is clean, set, and available

@@ -2,6 +2,7 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import model.exceptions.InvalidPartySizeInputException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,81 +110,141 @@ public class RestaurantTest {
     }
 
     @Test
+    void testValidTables() {
+        List<Table> testList = new ArrayList<>();
+        testRestaurant.addTable(5, "Test Table 1");
+        testRestaurant.addTable(4, "Test Table 2");
+        testRestaurant.addTable(10, "Test Table 3");
+
+        try {
+            testTableList = testRestaurant.validTables(6);
+            fail("Exception not thrown!");
+        } catch (InvalidPartySizeInputException e) {
+            // expected
+        }
+
+        testRestaurant.findTable("Test Table 1").trueSetTable();
+        testList.add(testRestaurant.findTable("Test Table 1"));
+
+        try {
+            testTableList = testRestaurant.validTables(5);
+            assertEquals(testList, testTableList);
+        } catch (InvalidPartySizeInputException e) {
+            fail("Caught InvalidPartySizeInputException");
+        }
+
+        testList.clear();
+        testRestaurant.findTable("Test Table 2").trueSetTable();
+        testRestaurant.findTable("Test Table 3").trueSetTable();
+        testList.add(testRestaurant.findTable("Test Table 3"));
+
+        try {
+            testTableList = testRestaurant.validTables(7);
+            assertEquals(testList, testTableList);
+        } catch (InvalidPartySizeInputException e) {
+            fail("Caught InvalidPartySizeInputException");
+        }
+
+        testList.clear();
+        testList.add(testRestaurant.findTable("Test Table 1"));
+        testList.add(testRestaurant.findTable("Test Table 2"));
+        testList.add(testRestaurant.findTable("Test Table 3"));
+        try {
+            testTableList = testRestaurant.validTables(3);
+            assertEquals(testList, testTableList);
+        } catch (InvalidPartySizeInputException e) {
+            fail("Caught InvalidPartySizeInputException");
+        }
+
+    }
+
+    @Test
     void testAssignCustomers() {
-        assertEquals("No Table", testRestaurant.assignCustomers(10));
-
-        testRestaurant.addTable(4, "Test Table 1");
-        assertEquals("No Table", testRestaurant.assignCustomers(9));
-        assertEquals(0, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertEquals("No Table", testRestaurant.assignCustomers(4));
-        assertEquals(0, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-
-        testRestaurant.removeTable("Test Table 1");
-        testRestaurant.addTable(4, "Test Table 1");
+        testRestaurant.addTable(9, "Test Table 1");
         testRestaurant.findTable("Test Table 1").trueSetTable();
-
-        assertEquals("No Table", testRestaurant.assignCustomers(9));
-        assertEquals(0, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertEquals("Test Table 1", testRestaurant.assignCustomers(4));
-        assertEquals(4, testRestaurant.getTotalCustomers());
-        assertFalse(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-
-        testRestaurant.removeTable("Test Table 1");
-        testRestaurant.addTable(4, "Test Table 1");
-        testRestaurant.findTable("Test Table 1").trueSetTable();
-        testRestaurant.addTable(5, "Test Table 2");
+        testRestaurant.addTable(7, "Test Table 2");
         testRestaurant.findTable("Test Table 2").trueSetTable();
-        testRestaurant.addTable(10, "Test Table 3");
+        testRestaurant.addTable(6, "Test Table 3");
         testRestaurant.findTable("Test Table 3").trueSetTable();
 
-        assertEquals("No Table", testRestaurant.assignCustomers(11));
-        assertEquals(4, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertTrue(testRestaurant.findTable("Test Table 2").getAvailabilityStatus());
-        assertTrue(testRestaurant.findTable("Test Table 3").getAvailabilityStatus());
-
-        assertEquals("Test Table 2", testRestaurant.assignCustomers(5));
-        assertEquals(9, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 2").getAvailabilityStatus());
-        assertTrue(testRestaurant.findTable("Test Table 3").getAvailabilityStatus());
-
-        assertEquals("Test Table 3", testRestaurant.assignCustomers(5));
-        assertEquals(14, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 2").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 3").getAvailabilityStatus());
-
-        assertEquals("No Table", testRestaurant.assignCustomers(11));
-        assertEquals(14, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 2").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 3").getAvailabilityStatus());
-
-        assertEquals("Test Table 1", testRestaurant.assignCustomers(2));
-        assertEquals(16, testRestaurant.getTotalCustomers());
-        assertFalse(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 2").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 3").getAvailabilityStatus());
+        assertEquals(testRestaurant.findTable("Test Table 3"),
+                testRestaurant.assignCustomers(testRestaurant.getTables(), 6));
 
         testRestaurant.removeTable("Test Table 1");
         testRestaurant.removeTable("Test Table 2");
-        testRestaurant.removeTable("Test Table 2");
+        testRestaurant.removeTable("Test Table 3");
+
         testRestaurant.addTable(4, "Test Table 1");
         testRestaurant.findTable("Test Table 1").trueSetTable();
-        testRestaurant.addTable(5, "Test Table 2");
+        testRestaurant.addTable(8, "Test Table 2");
         testRestaurant.findTable("Test Table 2").trueSetTable();
-        testRestaurant.addTable(10, "Test Table 3");
+        testRestaurant.addTable(6, "Test Table 3");
         testRestaurant.findTable("Test Table 3").trueSetTable();
 
-        assertEquals("Test Table 3", testRestaurant.assignCustomers(7));
-        assertEquals(23, testRestaurant.getTotalCustomers());
-        assertTrue(testRestaurant.findTable("Test Table 1").getAvailabilityStatus());
-        assertTrue(testRestaurant.findTable("Test Table 2").getAvailabilityStatus());
-        assertFalse(testRestaurant.findTable("Test Table 3").getAvailabilityStatus());
+        assertEquals(testRestaurant.findTable("Test Table 1"),
+                testRestaurant.assignCustomers(testRestaurant.getTables(), 2));
+    }
+
+    @Test
+    void testFindBestTableToAssign() {
+        List<Integer> testList = new ArrayList<>();
+
+        testRestaurant.addTable(5, "Test Table 1");
+        testRestaurant.findTable("Test Table 1").trueSetTable();
+        testRestaurant.addTable(4, "Test Table 2");
+        testRestaurant.findTable("Test Table 2").trueSetTable();
+        testRestaurant.addTable(10, "Test Table 3");
+        testTableList.add(testRestaurant.findTable("Test Table 3"));
+        testRestaurant.findTable("Test Table 3").trueSetTable();
+        testTableList.add(testRestaurant.findTable("Test Table 3"));
+        testList.add(10);
+
+        assertEquals(testRestaurant.findTable("Test Table 3"),
+                testRestaurant.findBestTableToAssign(testTableList, testList, 10));
+
+        testList.clear();
+        testTableList.clear();
+
+        testRestaurant.removeTable("Test Table 1");
+        testRestaurant.removeTable("Test Table 2");
+        testRestaurant.removeTable("Test Table 3");
+
+        testRestaurant.addTable(6, "Test Table 1");
+        testRestaurant.findTable("Test Table 1").trueSetTable();
+        testTableList.add(testRestaurant.findTable("Test Table 1"));
+        testList.add(6);
+        testRestaurant.addTable(8, "Test Table 2");
+        testRestaurant.findTable("Test Table 2").trueSetTable();
+        testTableList.add(testRestaurant.findTable("Test Table 2"));
+        testList.add(8);
+        testRestaurant.addTable(6, "Test Table 3");
+        testRestaurant.findTable("Test Table 3").trueSetTable();
+        testTableList.add(testRestaurant.findTable("Test Table 3"));
+        testList.add(6);
+
+        assertEquals(testRestaurant.findTable("Test Table 1"),
+                testRestaurant.findBestTableToAssign(testTableList, testList, 5));
+
+        testList.clear();
+        testTableList.clear();
+
+        testRestaurant.removeTable("Test Table 1");
+        testRestaurant.removeTable("Test Table 2");
+        testRestaurant.removeTable("Test Table 3");
+
+        testRestaurant.addTable(5, "Test Table 1");
+        testRestaurant.findTable("Test Table 1").trueSetTable();
+        testRestaurant.addTable(8, "Test Table 2");
+        testRestaurant.findTable("Test Table 2").trueSetTable();
+        testTableList.add(testRestaurant.findTable("Test Table 2"));
+        testList.add(8);
+        testRestaurant.addTable(11, "Test Table 3");
+        testRestaurant.findTable("Test Table 3").trueSetTable();
+        testTableList.add(testRestaurant.findTable("Test Table 3"));
+        testList.add(11);
+
+        assertEquals(testRestaurant.findTable("Test Table 2"),
+                testRestaurant.findBestTableToAssign(testTableList, testList, 7));
     }
 
     @Test
