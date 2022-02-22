@@ -22,6 +22,15 @@ public class BillTest {
     }
 
     @Test
+    void testOtherConstructor() {
+        Bill bill = new Bill(0.00, 0.00, false);
+
+        assertEquals(0.00, bill.getCost());
+        assertEquals(0.00, bill.getTip());
+        assertFalse(bill.getPayStatus());
+    }
+
+    @Test
     void testPayBill() {
         testBill.payBill();
         assertTrue(testBill.getPayStatus());

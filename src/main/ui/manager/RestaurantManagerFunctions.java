@@ -2,15 +2,57 @@ package ui.manager;
 
 import model.Food;
 import model.Table;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.exceptions.InvalidNameEnteredException;
 import ui.exceptions.InvalidNumberException;
 import ui.exceptions.StopRedoException;
 import ui.exceptions.TableForLoopBodyException;
 import ui.interfaces.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import static ui.manager.RestaurantManagerPrintAndAllStatusFunctions.*;
 
 public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctions {
+
+    public RestaurantManagerFunctions() throws FileNotFoundException {
+    }
+
+    protected static void load(boolean runRestaurant) {
+        if (runRestaurant) {
+            jsonReader = new JsonReader(jsonStore);
+            jsonWriter = new JsonWriter(jsonStore);
+            try {
+                restaurant = jsonReader.read();
+                System.out.println("Loaded " + restaurant.getName() + " from " + jsonStore);
+            } catch (IOException e) {
+                System.out.println("Unable to read from file: " + jsonStore);
+            }
+        }
+        init();
+        runRestaurant();
+    }
+
+    protected static void save(boolean saveRestaurant) {
+        if (saveRestaurant) {
+            jsonReader = new JsonReader(jsonStore);
+            jsonWriter = new JsonWriter(jsonStore);
+            try {
+                jsonWriter.open();
+                jsonWriter.write(restaurant);
+                jsonWriter.close();
+                System.out.println("Saved " + restaurant.getName() + " to " + jsonStore);
+
+                newRestaurant = false;
+                System.out.println("\nPress Enter To Return To Main Menu:");
+                input.next();
+            } catch (IOException e) {
+                System.out.println("Unable to write from file: " + jsonStore);
+            }
+        }
+    }
 
     // MODIFIES: this
     // EFFECTS: adds table to restaurant
@@ -164,6 +206,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
     protected static void doShowEarnings() {
         System.out.println("\nThe restaurant has made $" + DF.format(restaurant.getEarnings()) + "!");
         System.out.println("There has also been $" + DF.format(restaurant.getTips()) + " in tips!");
+        System.out.println("\nThere has been a total of " + restaurant.getTotalCustomers() + " customers!");
 
         System.out.print("\nPress Enter to Continue:");
         input.next();
@@ -248,9 +291,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
 
     protected static void cleaningHistoryTable() {
         String historyName = "Cleaning";
-        PrintHistoryFunction printHistory = (Table table) -> {
+        PrintHistoryFunction printHistory = (Table table, String hName) -> {
             GetHistoryFunction getHistory = table::getCleaningHistory;
-            printHistoryDates(getHistory);
+            printHistoryDates(getHistory, hName);
         };
         String redoQuestion = "check the cleaning history of another table?";
         String menuName = "cleaning menu ";
@@ -442,9 +485,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
 
     protected static void deliveryHistoryTable() {
         String historyName = "Delivery";
-        PrintHistoryFunction printHistory = (Table table) -> {
+        PrintHistoryFunction printHistory = (Table table, String hName) -> {
             GetHistoryFunction getHistory = table::getDeliveryHistory;
-            printHistoryDates(getHistory);
+            printHistoryDates(getHistory, hName);
         };
         String redoQuestion = "check the delivery history of another table?";
         String menuName = "food menu";
@@ -521,9 +564,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
 
     protected static void purchaseHistoryTable() {
         String historyName = "Purchase";
-        PrintHistoryFunction printHistory = (Table table) -> {
+        PrintHistoryFunction printHistory = (Table table, String hName) -> {
             GetHistoryFunction getHistory = table::getPurchaseHistory;
-            printHistoryDates(getHistory);
+            printHistoryDates(getHistory, hName);
         };
         String redoQuestion = "check the purchase history of another table?";
         String menuName = "billing menu";

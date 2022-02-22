@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents a bill with cost, tip, and a pay status. Also has a set tax amount.
-public class Bill {
+public class Bill implements Writable {
 
     private static final Double TAX = 0.05;
 
@@ -14,6 +17,12 @@ public class Bill {
         this.cost = 0.00;
         this.tip = 0.00;
         this.payStatus = false;
+    }
+
+    public Bill(Double cost, Double tip, boolean payStatus) {
+        this.cost = cost;
+        this.tip = tip;
+        this.payStatus = payStatus;
     }
 
     // MODIFIES: this
@@ -57,5 +66,14 @@ public class Bill {
     // setters
     public void falsePayStatus() {
         payStatus = false;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("cost", cost);
+        json.put("tip", tip);
+        json.put("pay status", payStatus);
+        return json;
     }
 }

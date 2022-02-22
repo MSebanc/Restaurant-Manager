@@ -16,7 +16,7 @@ public class RestaurantTest {
 
     @BeforeEach
     void runBefore() {
-        testRestaurant = new Restaurant();
+        testRestaurant = new Restaurant("Test Restaurant");
         testTableList = new ArrayList<>();
     }
 
@@ -27,6 +27,17 @@ public class RestaurantTest {
         assertEquals(0, testRestaurant.getTotalCustomers());
         assertEquals(0.00, testRestaurant.getTips());
         assertEquals(0.00, testRestaurant.getEarnings());
+    }
+
+    @Test
+    void testOtherConstructor() {
+        Restaurant restaurant = new Restaurant("Test Restaurant", 0, 0.00, 0.00);
+
+        assertEquals(11, restaurant.getMenu().size());
+        assertEquals(testTableList, restaurant.getTables());
+        assertEquals(0, restaurant.getTotalCustomers());
+        assertEquals(0.00, restaurant.getTips());
+        assertEquals(0.00, restaurant.getEarnings());
     }
 
     @Test
@@ -169,6 +180,7 @@ public class RestaurantTest {
 
         assertEquals(testRestaurant.findTable("Test Table 3"),
                 testRestaurant.assignCustomers(testRestaurant.getTables(), 6));
+        assertEquals(6, testRestaurant.getTotalCustomers());
 
         testRestaurant.removeTable("Test Table 1");
         testRestaurant.removeTable("Test Table 2");
@@ -183,6 +195,7 @@ public class RestaurantTest {
 
         assertEquals(testRestaurant.findTable("Test Table 1"),
                 testRestaurant.assignCustomers(testRestaurant.getTables(), 2));
+        assertEquals(8, testRestaurant.getTotalCustomers());
     }
 
     @Test

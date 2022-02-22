@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -7,18 +11,18 @@ import java.util.List;
 
 // Represents a table with clean, set, availability, and food delivery statuses as well as a name, max occupancy, Bill,
 // and lists for cleaning history, delivery history, and purchase history
-public class Table {
+public class Table implements Writable {
 
 
     private Boolean cleanStatus;
     private Boolean setStatus;
     private Boolean availabilityStatus;
     private Boolean foodDeliveryStatus;
-    private String name;
-    private int maxOccupancy;
-    private List<String> cleaningHistory;
-    private List<String> deliveryHistory;
-    private List<String> purchaseHistory;
+    private final String name;
+    private final int maxOccupancy;
+    private final List<String> cleaningHistory;
+    private final List<String> deliveryHistory;
+    private final List<String> purchaseHistory;
     private Bill bill;
 
     // EFFECTS: Constructs a table with cleaning status true, set status false, food delivery status true,
@@ -34,8 +38,24 @@ public class Table {
         this.cleaningHistory = new ArrayList<>();
         this.deliveryHistory = new ArrayList<>();
         this.purchaseHistory = new ArrayList<>();
-        this.bill = null;
+        this.bill = new Bill();
     }
+
+    public Table(boolean cleanStatus, boolean setStatus, boolean availabilityStatus, boolean foodDeliveryStatus,
+                 String name, int maxOccupancy, List<String> cleaningHistory, List<String> deliveryHistory,
+                 List<String> purchaseHistory) {
+        this.cleanStatus = cleanStatus;
+        this.setStatus = setStatus;
+        this.availabilityStatus = availabilityStatus;
+        this.foodDeliveryStatus = foodDeliveryStatus;
+        this.name = name;
+        this.maxOccupancy = maxOccupancy;
+        this.cleaningHistory = cleaningHistory;
+        this.deliveryHistory = deliveryHistory;
+        this.purchaseHistory = purchaseHistory;
+        this.bill = new Bill();
+    }
+
 
     // MODIFIES: this
     // EFFECTS: cleans table and records cleaning time in cleaning history
@@ -55,7 +75,7 @@ public class Table {
         availabilityStatus = true;
         cleanStatus = false;
         setStatus = false;
-        bill = null;
+        bill = new Bill();
 
     }
 
@@ -145,4 +165,33 @@ public class Table {
         availabilityStatus = true;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("clean status", cleanStatus);
+        json.put("set status", setStatus);
+        json.put("availability status", availabilityStatus);
+        json.put("food delivery status", foodDeliveryStatus);
+        json.put("name", name);
+        json.put("max occupancy", maxOccupancy);
+        json.put("cleaning history", convertListToJsonArray(cleaningHistory));
+        json.put("delivery history", convertListToJsonArray(deliveryHistory));
+        json.put("purchase history", convertListToJsonArray(purchaseHistory));
+        json.put("bill", bill.toJson());
+
+        return json;
+    }
+
+    private JSONArray convertListToJsonArray(List<String> history) {
+        JSONArray jsonArray = new JSONArray();
+        for (String date : history) {
+            jsonArray.put(date);
+        }
+        return jsonArray;
+    }
+
+
+    public void addBillFromJson(Bill b) {
+        bill = b;
+    }
 }

@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +11,7 @@ import java.util.Objects;
 // Represents a menu with a list of food
 public class Menu {
 
-    private List<Food> menu;
+    private final List<Food> menu;
 
     // EFFECTS: Constructs a menu and adds food items to the menu
     public Menu() {
@@ -53,4 +57,5 @@ public class Menu {
     public List<Food> getMenu() {
         return menu;
     }
+
 }

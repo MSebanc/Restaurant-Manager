@@ -1,11 +1,19 @@
 package ui.manager;
 
 import model.Food;
+import model.Restaurant;
 import model.Table;
+import persistence.JsonReader;
 import ui.interfaces.AllStatusIfBoolean;
 import ui.interfaces.TableToStringFunction;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class RestaurantManagerPrintAndAllStatusFunctions extends RestaurantManagerFunctions {
+
+    public RestaurantManagerPrintAndAllStatusFunctions() throws FileNotFoundException {
+    }
 
     // EFFECTS: prints all tables name and max occupancy
     protected static void printTablesMax() {
@@ -66,6 +74,33 @@ public class RestaurantManagerPrintAndAllStatusFunctions extends RestaurantManag
         System.out.println("\nFood That Can Be Ordered: ");
         for (Food food : restaurant.getMenu()) {
             System.out.println("Food Name: " + food.getName() + ", Price: $" + DF.format(food.getPrice()));
+        }
+    }
+
+    protected static void printStores() {
+        try {
+            jsonStore = "./data/json/store1.json";
+            Restaurant store = new JsonReader(jsonStore).read();
+            System.out.println("1: " + store.getName());
+
+            jsonStore = "./data/json/store2.json";
+            store = new JsonReader(jsonStore).read();
+            System.out.println("2: " + store.getName());
+
+            jsonStore = "./data/json/store3.json";
+            store = new JsonReader(jsonStore).read();
+            System.out.println("3: " + store.getName());
+
+            jsonStore = "./data/json/store4.json";
+            store = new JsonReader(jsonStore).read();
+            System.out.println("4: " + store.getName());
+
+            jsonStore = "./data/json/store5.json";
+            store = new JsonReader(jsonStore).read();
+            System.out.println("5: " + store.getName());
+
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + jsonStore);
         }
     }
 

@@ -30,8 +30,32 @@ public class TableTest {
         assertEquals("Test Name", testTable.getName());
         assertEquals(5, testTable.getMaxOccupancy());
         assertEquals(testList, testTable.getCleaningHistory());
-        assertNull(testTable.getBill());
+        assertEquals(testList, testTable.getDeliveryHistory());
+        assertEquals(testList, testTable.getPurchaseHistory());
+        assertEquals(0.00, testTable.getBill().getCost());
+        assertEquals(0.00, testTable.getBill().getTip());
+        assertFalse(testTable.getBill().getPayStatus());
     }
+
+    @Test
+    void testOtherConstructor() {
+        Table table = new Table(true, false, true, true, "Test Name",
+                5, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+
+        assertTrue(table.getCleanStatus());
+        assertFalse(table.getSetStatus());
+        assertTrue(table.getAvailabilityStatus());
+        assertTrue(table.getFoodDeliveryStatus());
+        assertEquals("Test Name", table.getName());
+        assertEquals(5, table.getMaxOccupancy());
+        assertEquals(testList, table.getCleaningHistory());
+        assertEquals(testList, table.getPurchaseHistory());
+        assertEquals(testList, table.getDeliveryHistory());
+        assertEquals(0.00, table.getBill().getCost());
+        assertEquals(0.00, table.getBill().getTip());
+        assertFalse(table.getBill().getPayStatus());
+    }
+
 
     @Test
     void testCleanTable() {
@@ -61,7 +85,9 @@ public class TableTest {
         assertTrue(testTable.getAvailabilityStatus());
         assertFalse(testTable.getCleanStatus());
         assertFalse(testTable.getSetStatus());
-        assertNull(testTable.getBill());
+        assertEquals(0.00, testTable.getBill().getCost());
+        assertEquals(0.00, testTable.getBill().getTip());
+        assertFalse(testTable.getBill().getPayStatus());
 
         testTable.cleanTable();
         testTable.trueSetTable();
@@ -72,7 +98,9 @@ public class TableTest {
         assertTrue(testTable.getAvailabilityStatus());
         assertFalse(testTable.getCleanStatus());
         assertFalse(testTable.getSetStatus());
-        assertNull(testTable.getBill());
+        assertEquals(0.00, testTable.getBill().getCost());
+        assertEquals(0.00, testTable.getBill().getTip());
+        assertFalse(testTable.getBill().getPayStatus());
     }
 
     @Test

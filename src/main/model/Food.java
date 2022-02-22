@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents a food item with a name and price
 public class Food {
 
-    private String name;
-    private Double price;
+    private final String name;
+    private final Double price;
 
 
     // REQUIRED: Price must have no more than two decimal points
@@ -22,4 +25,5 @@ public class Food {
     public Double getPrice() {
         return price;
     }
+
 }

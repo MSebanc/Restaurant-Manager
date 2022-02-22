@@ -1,0 +1,58 @@
+{
+    "tables": [
+        {
+            "food delivery status": false,
+            "delivery history": [
+                "2022-02-21 18:46:04",
+                "2022-02-21 18:49:10"
+            ],
+            "max occupancy": 4,
+            "cleaning history": [
+                "2022-02-21 18:41:38",
+                "2022-02-21 18:42:58"
+            ],
+            "clean status": true,
+            "name": "Table 1",
+            "purchase history": [
+                "2022-02-21 18:47:43",
+                "2022-02-21 18:49:24"
+            ],
+            "availability status": false,
+            "bill": {
+                "cost": 15.25,
+                "pay status": false,
+                "tip": 2
+            },
+            "set status": true
+        },
+        {
+            "food delivery status": true,
+            "delivery history": [
+                "2022-02-21 18:46:07",
+                "2022-02-21 18:49:14"
+            ],
+            "max occupancy": 7,
+            "cleaning history": [
+                "2022-02-21 18:41:58",
+                "2022-02-21 18:50:31"
+            ],
+            "clean status": false,
+            "name": "Table 2",
+            "purchase history": [
+                "2022-02-21 18:48:10",
+                "2022-02-21 18:49:43"
+            ],
+            "availability status": true,
+            "bill": {
+                "cost": 0,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": false
+        }
+    ],
+    "earnings": 19.75,
+    "total customers": 18,
+    "name": "Test Restaurant",
+    "tips": 12.35
+}

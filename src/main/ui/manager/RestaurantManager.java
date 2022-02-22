@@ -2,7 +2,10 @@ package ui.manager;
 
 import model.Restaurant;
 import model.Table;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -15,21 +18,119 @@ public class RestaurantManager {
 
     protected static Restaurant restaurant;
     protected static Scanner input;
+    protected static Scanner inputLoad;
     protected static String currentTableName;
+    protected static JsonWriter jsonWriter;
+    protected static JsonReader jsonReader;
+    protected static String jsonStore;
+    protected static boolean newRestaurant = false;
 
     // EFFECTS: runs the restaurant application
-    public RestaurantManager() {
-        runRestaurant();
+    public RestaurantManager() throws FileNotFoundException {
+        loadRestaurant();
+    }
+
+    private void loadRestaurant() {
+        boolean keepGoing = true;
+        String command;
+        inputLoad = new Scanner(System.in);
+        inputLoad.useDelimiter("\n");
+        while (keepGoing) {
+            displayLoadMenu();
+            command = inputLoad.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processLoadCommand(command);
+            }
+        }
+
+        System.out.println("\nGoodbye!");
+    }
+
+    private void displayLoadMenu() {
+        System.out.println("\nSelect from:");
+        System.out.println("\tn -> new restaurant");
+        System.out.println("\tl -> load restaurant");
+        System.out.println("\tq -> quit");
+
+        System.out.print("Enter: ");
+    }
+
+    private void processLoadCommand(String command) {
+        switch (command) {
+            case "n":
+                init();
+                System.out.println("Enter New Restaurant Name: ");
+                String name = input.next();
+                restaurant = new Restaurant(name);
+                newRestaurant = true;
+                runRestaurant();
+                break;
+            case "l":
+                loadStoreRestaurant();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+        }
+    }
+
+    private void loadStoreRestaurant() {
+        boolean keepGoing = true;
+        String command;
+        while (keepGoing) {
+            displayLoadStoreMenu();
+            command = inputLoad.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processLoadStoreCommand(command);
+            }
+        }
+
+        System.out.println("\nGoodbye!");
+    }
+
+    private static void displayLoadStoreMenu() {
+        System.out.println("\n\nSelect from:");
+        printStores();
+        System.out.print("Enter: ");
+    }
+
+    private void processLoadStoreCommand(String command) {
+        boolean runRestaurant = true;
+        switch (command) {
+            case "1":
+                jsonStore = "./data/json/store1.json";
+                break;
+            case "2":
+                jsonStore = "./data/json/store2.json";
+                break;
+            case "3":
+                jsonStore = "./data/json/store3.json";
+                break;
+            case "4":
+                jsonStore = "./data/json/store4.json";
+                break;
+            case "5":
+                jsonStore = "./data/json/store5.json";
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                runRestaurant = false;
+        }
+        load(runRestaurant);
     }
 
     // MODIFIES: this
     // EFFECTS: processes user input for main menu
-    private void runRestaurant() {
+    protected static void runRestaurant() {
         boolean keepGoing = true;
         String command;
-        init();
-        displayInfo();
-        input.nextLine();
 
         while (keepGoing) {
             displayMenu();
@@ -46,11 +147,11 @@ public class RestaurantManager {
             }
         }
 
-        System.out.println("\nGoodbye!");
+        System.out.println("\nQuitting program...");
     }
 
     // EFFECTS: Displays Info to user
-    private void displayInfo() {
+    private static void displayInfo() {
         System.out.println(
                   "\nWelcome to Restaurant Manager, here is some basic information to get started:"
                 + "\nA menu of possible actions will be displayed,"
@@ -81,7 +182,7 @@ public class RestaurantManager {
 
     // MODIFIES: this, Restaurant
     // EFFECTS: processes user command for main menu
-    private void processCommand(String command) {
+    private static void processCommand(String command) {
         switch (command) {
             case "a":
                 doAddTable();
@@ -98,22 +199,23 @@ public class RestaurantManager {
             case "c":
                 doAssignCustomer();
                 break;
+            case "s":
+                saveRestaurant();
             default:
                 System.out.println("Selection not valid...");
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes restaurant
-    private void init() {
-        restaurant = new Restaurant();
+    // EFFECTS: initializes restaurant manager
+    protected static void init() {
         currentTableName = null;
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
 
     // EFFECTS: displays main menu of options to user
-    private void displayMenu() {
+    private static void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\ta -> add table");
         System.out.println("\tr -> remove table");
@@ -121,6 +223,7 @@ public class RestaurantManager {
         System.out.println("\te -> check earnings");
         System.out.println("\tc -> assign customers");
         System.out.println("\ti -> info");
+        System.out.println("\ts -> save restaurant");
         System.out.println("\tq -> quit");
 
         System.out.print("Enter: ");
@@ -128,7 +231,7 @@ public class RestaurantManager {
 
     // MODIFIES: this
     // EFFECTS: displays table display menu and processes table commands
-    private void doTableCommands() {
+    private static void doTableCommands() {
         if (new ArrayList<Table>().equals(restaurant.getTables())) {
             System.out.println("No tables to manage...");
         } else {
@@ -151,7 +254,7 @@ public class RestaurantManager {
     }
 
     // EFFECTS: displays menu of table options to user
-    private void displayTableMenu() {
+    private static void displayTableMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\tc -> clean");
         System.out.println("\ts -> set");
@@ -165,7 +268,7 @@ public class RestaurantManager {
 
     // MODIFIES: this
     // EFFECTS: processes user commands for table menu
-    private void processTableCommand(String command) {
+    private static void processTableCommand(String command) {
         switch (command) {
             case "c":
                 cleanTables();
@@ -189,7 +292,7 @@ public class RestaurantManager {
 
     // MODIFIES: this
     // processes user input for cleaning menu
-    private void cleanTables() {
+    private static void cleanTables() {
         boolean keepGoing = true;
         String command;
 
@@ -208,7 +311,7 @@ public class RestaurantManager {
     }
 
     // EFFECTS: displays cleaning menu of options to user
-    private void displayCleanMenu() {
+    private static void displayCleanMenu() {
         printCleanTables();
 
         System.out.println("\nSelect from:");
@@ -219,7 +322,7 @@ public class RestaurantManager {
         System.out.print("Enter: ");
     }
 
-    private void processCleanCommand(String command) {
+    private static void processCleanCommand(String command) {
         switch (command) {
             case "c":
                 cleanTable();
@@ -234,7 +337,7 @@ public class RestaurantManager {
 
     // MODIFIES: this
     // EFFECTS: processes user input for food menu
-    private void foodTables() {
+    private static void foodTables() {
         boolean keepGoing = true;
         String command;
 
@@ -253,7 +356,7 @@ public class RestaurantManager {
     }
 
     // EFFECTS: displays food menu to user
-    private void displayFoodMenu() {
+    private static void displayFoodMenu() {
         printAvailabilityTables();
         System.out.println("\nSelect from:");
         System.out.println("\to -> order food");
@@ -266,7 +369,7 @@ public class RestaurantManager {
 
     // MODIFIES: this
     // EFFECTS: processes user commands for food menu
-    private void processFoodCommand(String command) {
+    private static void processFoodCommand(String command) {
         switch (command) {
             case "o":
                 orderFoodTable();
@@ -284,7 +387,7 @@ public class RestaurantManager {
 
     // MODIFIES: this
     // EFFECTS: processes user input for bill menu
-    private void billTables() {
+    private static void billTables() {
         boolean keepGoing = true;
         String command;
 
@@ -303,7 +406,7 @@ public class RestaurantManager {
     }
 
     // EFFECTS: displays bill menu to user
-    private void displayBillMenu() {
+    private static void displayBillMenu() {
         printBillTables();
 
         System.out.println("\nSelect from:");
@@ -316,7 +419,7 @@ public class RestaurantManager {
 
     // MODIFIES: this
     // EFFECTS: processes user command for bill menu
-    private void processBillCommand(String command) {
+    private static void processBillCommand(String command) {
         switch (command) {
             case "p":
                 billTable();
@@ -328,5 +431,63 @@ public class RestaurantManager {
                 System.out.println("Selection not valid...");
         }
     }
+
+    private static void saveRestaurant() {
+        if (newRestaurant) {
+            saveNewRestaurant();
+        } else {
+            save(true);
+        }
+    }
+
+    private static void saveNewRestaurant() {
+        boolean keepGoing = true;
+        String command;
+        while (keepGoing) {
+            displaySaveMenu();
+            command = input.next();
+            command = command.toLowerCase();
+
+            if (command.equals("q")) {
+                keepGoing = false;
+            } else {
+                processSaveCommand(command);
+            }
+        }
+
+        System.out.println("\nGoodbye!");
+    }
+
+    private static void displaySaveMenu() {
+        System.out.println("\n\nChoose A Slot To Save To:");
+        printStores();
+        System.out.print("Enter: ");
+    }
+
+    private static void processSaveCommand(String command) {
+        boolean saveRestaurant = true;
+        switch (command) {
+            case "1":
+                jsonStore = "./data/json/store1.json";
+                break;
+            case "2":
+                jsonStore = "./data/json/store2.json";
+                break;
+            case "3":
+                jsonStore = "./data/json/store3.json";
+                break;
+            case "4":
+                jsonStore = "./data/json/store4.json";
+                break;
+            case "5":
+                jsonStore = "./data/json/store5.json";
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                saveRestaurant = false;
+        }
+        save(saveRestaurant);
+    }
+
 
 }

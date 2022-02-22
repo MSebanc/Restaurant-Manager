@@ -1,29 +1,43 @@
 package model;
 
 import model.exceptions.InvalidPartySizeInputException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 // Represents a restaurant with tables, menu, count of total customers, tips (in dollars), and earnings (in dollars)
-public class Restaurant {
+public class Restaurant implements Writable {
 
-    private Menu menu;
-    private List<Table> tables;
+    private final Menu menu;
+    private final List<Table> tables;
+    private final String name;
     private int totalCustomers;
     private Double tips;
     private Double earnings;
 
 
-    // EFFECTS: constructs a restaurant with menu, empty list of tables, total customers set to 0,
+    // EFFECTS: constructs a restaurant with menu, empty list of tables, given name, total customers set to 0,
     // table count set to 0, tips set to 0, and earnings set to 0
-    public Restaurant() {
+    public Restaurant(String name) {
         this.menu = new Menu();
         this.tables = new ArrayList<>();
+        this.name = name;
         this.totalCustomers = 0;
         this.tips = 0.00;
         this.earnings = 0.00;
+    }
+
+    public Restaurant(String name, int totalCustomers, Double tips, Double earnings) {
+        this.menu = new Menu();
+        this.tables = new ArrayList<>();
+        this.name = name;
+        this.totalCustomers = totalCustomers;
+        this.tips = tips;
+        this.earnings = earnings;
     }
 
     // REQUIRES: name not already in list of tables, name is not null, max > 0
@@ -70,6 +84,7 @@ public class Restaurant {
             tableMaxOccupancy.add(table.getMaxOccupancy());
         }
 
+        totalCustomers += partySize;
         return findBestTableToAssign(tables, tableMaxOccupancy, partySize);
     }
 
@@ -154,6 +169,36 @@ public class Restaurant {
 
     public Double getEarnings() {
         return earnings;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("tables", tablesToJson());
+        json.put("name", name);
+        json.put("total customers", totalCustomers);
+        json.put("tips", tips);
+        json.put("earnings", earnings);
+        return json;
+    }
+
+    // EFFECTS: returns tables in this restaurant as a JSON array
+    private JSONArray tablesToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Table table : tables) {
+            jsonArray.put(table.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    public void addTableFromJson(Table t) {
+        tables.add(t);
     }
 }
 
