@@ -9,9 +9,12 @@ import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.List;
 
+// Restaurant Manager Application (functions that take lambda functions as parameters)
 public class RestaurantManagerAbstractFunctions extends RestaurantManager {
 
+    // EFFECTS: Constructor
     public RestaurantManagerAbstractFunctions() throws FileNotFoundException {
+        // does nothing
     }
 
     // EFFECTS: abstract function that prints tables, calls given command function on tables,
@@ -29,7 +32,7 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
 
     }
 
-    // MODIFIES: this
+    // MODIFIES: RestaurantManager
     // processes user command for if the user wants to redo command function
     protected static void redoAbstractTableCommand(PrintFunction printTable, TableActionsCommands commandFunction,
                                           String redoQuestion, String menuName, StopRedo stopRedo) {
@@ -43,7 +46,7 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
         redoAbstractTableCommandSwitch(printTable, commandFunction, redoQuestion, command, menuName, stopRedo);
     }
 
-    // MODIFIES: this
+    // MODIFIES: RestaurantManager
     // EFFECTS: processes user commands for if the user wants to redo command function
     protected static void redoAbstractTableCommandSwitch(PrintFunction printTable, TableActionsCommands commandFunction,
                                                 String redoQuestion, String command, String menuName,
@@ -64,7 +67,7 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: RestaurantManager
     // EFFECTS: processes user input for the given table command calls function with that input
     protected static void abstractTableFunction(PrintFunction printTable, String enterStatement,
                                        TableForLoops forLoop, String invalidInputStatement,
@@ -81,9 +84,8 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
                 } catch (TableForLoopBodyException e) {
                     System.out.println("\nInvalid " + invalidInputStatement + ", please try again");
                 }
-
-                stopRedo.run();
             }
+            stopRedo.run();
         };
 
         try {
@@ -94,6 +96,8 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: processes user input for history functions
     protected static void abstractHistoryFunction(String historyName, PrintHistoryFunction printHistory,
                                                   String redoQuestion, String menuName) {
         StopRedo stopRedo = () -> {
@@ -125,15 +129,17 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
         }
     }
 
+    // EFFECTS: prints history dates of given history function
     protected static void printHistoryDates(GetHistoryFunction getHistory, String historyName) {
         List<String> history = getHistory.run();
         Collections.reverse(history);
-        System.out.println("\n" + historyName + " History");
+        System.out.println("\n" + historyName + " History:");
         for (String date : history) {
             System.out.println(date);
         }
     }
 
+    // EFFECTS: prints table with given print statement
     protected static void printTableFunction(TableToStringFunction printStatement) {
         System.out.println("\nCurrent Tables:");
         for (Table table : restaurant.getTables()) {
@@ -141,6 +147,7 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
         }
     }
 
+    // EFFECTS: returns true when given condition is met
     protected static boolean allStatus(AllStatusIfBoolean ifBoolean) {
         boolean allStatus = true;
         for (Table table : restaurant.getTables()) {
@@ -152,6 +159,8 @@ public class RestaurantManagerAbstractFunctions extends RestaurantManager {
         return allStatus;
     }
 
+    // EFFECTS: loops through all tables in restaurant and prints the history of that function selection is equal to
+    // table name. Throws TableForLoopBodyException if no table is found
     protected static void historyForLoop(String selection, PrintHistoryFunction printHistory, String historyName)
             throws TableForLoopBodyException {
         boolean forLoopException = true;

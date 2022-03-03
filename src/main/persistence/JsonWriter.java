@@ -3,10 +3,10 @@ package persistence;
 import model.Restaurant;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 
+// Represents a writer that writes JSON representation of restaurant to file: Code structure is based on the project
+// JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -25,7 +25,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of Restaurant to file
     public void write(Restaurant r) {
         JSONObject json = r.toJson();
         saveToFile(json.toString(TAB));

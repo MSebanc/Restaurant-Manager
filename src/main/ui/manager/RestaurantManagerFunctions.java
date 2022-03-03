@@ -15,27 +15,35 @@ import java.io.IOException;
 
 import static ui.manager.RestaurantManagerPrintAndAllStatusFunctions.*;
 
+// Restaurant Manager Application (sub functions): Code structure is loosely based on the project JsonSerializationDemo
 public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctions {
 
+    // EFFECTS: Constructor
     public RestaurantManagerFunctions() throws FileNotFoundException {
+        // does nothing
     }
 
-    protected static void load(boolean runRestaurant) {
+    // MODIFIES: RestaurantManager
+    // EFFECTS: if runRestaurant is true, load restaurant from file and run restaurant
+    protected static void load(boolean runRestaurant) throws StopRedoException {
         if (runRestaurant) {
             jsonReader = new JsonReader(jsonStore);
             jsonWriter = new JsonWriter(jsonStore);
             try {
                 restaurant = jsonReader.read();
                 System.out.println("Loaded " + restaurant.getName() + " from " + jsonStore);
+                init();
+                runRestaurant();
+                throw new StopRedoException();
             } catch (IOException e) {
                 System.out.println("Unable to read from file: " + jsonStore);
             }
         }
-        init();
-        runRestaurant();
     }
 
-    protected static void save(boolean saveRestaurant) {
+    // MODIFIES: RestaurantManager
+    // EFFECTS: if saveRestaurant is true, save restaurant to file
+    protected static void save(boolean saveRestaurant) throws StopRedoException {
         if (saveRestaurant) {
             jsonReader = new JsonReader(jsonStore);
             jsonWriter = new JsonWriter(jsonStore);
@@ -46,15 +54,16 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
                 System.out.println("Saved " + restaurant.getName() + " to " + jsonStore);
 
                 newRestaurant = false;
-                System.out.println("\nPress Enter To Return To Main Menu:");
+                System.out.print("\nPress Enter To Go To Main Menu:");
                 input.next();
+                throw new StopRedoException();
             } catch (IOException e) {
                 System.out.println("Unable to write from file: " + jsonStore);
             }
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: RestaurantManager
     // EFFECTS: adds table to restaurant
     protected static void doAddTable() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printTablesMax;
@@ -79,6 +88,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         currentTableName = null;
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: adds table to restaurant
     private static void nameToAddWhenEmpty() {
         try {
             System.out.print("\nEnter New Table Name: ");
@@ -93,6 +104,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // EFFECTS: calls abstractTableFunction for adding a new table to restaurant
     private static void nameToAdd() {
         PrintFunction printTable = () -> System.out.print("");
         String enterStatement = "Enter New Table Name: ";
@@ -110,6 +122,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
                 invalidInputStatement, redoQuestion, menuName, stopRedo);
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: currentTableName is set to selection and for list of tables, if table name is equal to selection,
+    // throws TableForLoopBodyException
     private static void nameToAddForLoop(String selection) throws TableForLoopBodyException {
         for (Table table : restaurant.getTables()) {
             if (selection.equalsIgnoreCase(table.getName())) {
@@ -119,7 +134,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         currentTableName = selection;
     }
 
-    // processes user input for an integer for max occupancy and returns it
+    // MODIFIES: RestaurantManager
+    // EFFECTS: processes user input for an integer for max occupancy and returns it
     private static int selectTableOccupancy() {
         String selection;
         System.out.print("Enter Positive Number for Table Max Occupancy: ");
@@ -138,7 +154,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
-    // MODIFIES: this, Restaurant
+    // MODIFIES: RestaurantManager
     // EFFECTS: removes table from restaurant
     protected static void doRemoveTable() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printTablesMax;
@@ -170,6 +186,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
 
     }
 
+    // EFFECTS: calls abstractTableFunction for removing a new table to restaurant
     private static void nameToRemove() {
         PrintFunction printTable = () -> System.out.print("");
         String enterStatement = "Enter Name of Table to Remove: ";
@@ -189,6 +206,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
                 invalidInputStatement, redoQuestion, menuName, stopRedo);
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all table names do not equal selection, otherwise sets
+    // currentTableName to table name
     private static void nameToRemoveForLoop(String selection) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Table table : restaurant.getTables()) {
@@ -202,6 +222,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
     // EFFECTS: shows amount the restaurant has earned and the amount of tips earned
     protected static void doShowEarnings() {
         System.out.println("\nThe restaurant has made $" + DF.format(restaurant.getEarnings()) + "!");
@@ -212,7 +233,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         input.next();
     }
 
-    // MODIFIES: this, Restaurant
+    // MODIFIES: RestaurantManager
     // EFFECTS: processes user input for assigning party to table
     protected static void doAssignCustomer() {
         if (notAvailable()) {
@@ -249,6 +270,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         return notAvailable;
     }
 
+    // EFFECTS: calls abstractTableFunction for cleaning a table
     protected static void cleanTable() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printCleanTables;
         String enterStatement = "\nEnter Table Name To Clean: ";
@@ -275,6 +297,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
 
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all table names do not equal selection or all tables are clean,
+    // otherwise cleans table
     private static void cleanTableForLoop(String selection) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Table table : restaurant.getTables()) {
@@ -289,6 +314,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // EFFECTS: calls abstractHistoryFunction for cleaningHistory
     protected static void cleaningHistoryTable() {
         String historyName = "Cleaning";
         PrintHistoryFunction printHistory = (Table table, String hName) -> {
@@ -302,6 +328,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         abstractHistoryFunction(historyName, printHistory, redoQuestion, menuName);
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: calls abstractTableFunction for setting a table
     protected static void setTables() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printSetTables;
         String enterStatement = "Enter Table Name To Set: ";
@@ -327,6 +355,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all table names do not equal selection or all tables are set,
+    // otherwise sets table
     private static void setTableForLoop(String selection) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Table table : restaurant.getTables()) {
@@ -341,6 +372,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: calls abstractTableFunction for setting a table as unoccupied
     protected static void availabilityTables() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printAvailabilityTables;
         String enterStatement = "Enter Table Name To Mark As Unoccupied: ";
@@ -366,6 +399,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all table names do not equal selection or all tables are available,
+    // otherwise empties table
     private static void availabilityTableForLoop(String selection) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Table table : restaurant.getTables()) {
@@ -380,6 +416,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: calls abstractTableFunction for ordering food for a table
     protected static void orderFoodTable() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printOrderTables;
         String enterStatement = "\nEnter Table Name To Order Food: ";
@@ -400,6 +438,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all table names do not equal selection or all tables are available,
+    // otherwise orders food for table
     private static void orderFoodTableForLoop(String selection) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Table table : restaurant.getTables()) {
@@ -414,6 +455,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: calls abstractTableFunction for ordering food for a given table
     private static void order(String tableName) {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printFood;
         String enterStatement = "\nEnter Food Name: ";
@@ -430,6 +473,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
                 invalidInputStatement, redoQuestion, menuName, stopRedo);
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all food names do not equal selection, otherwise sets table
     private static void foodForLoop(String selection, String tableName) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Food food : restaurant.getMenu()) {
@@ -444,6 +489,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: calls abstractTableFunction for delivery food to a table
     protected static void deliverFoodTables() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printDeliveryTables;
         String enterStatement = "Enter Table Name To Deliver Food For: ";
@@ -469,6 +516,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all table names do not equal selection or all tables are set,
+    // otherwise sets table
     private static void deliverTableForLoop(String selection) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Table table : restaurant.getTables()) {
@@ -483,6 +533,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // EFFECTS: calls abstractHistoryFunction for deliveryHistory
     protected static void deliveryHistoryTable() {
         String historyName = "Delivery";
         PrintHistoryFunction printHistory = (Table table, String hName) -> {
@@ -496,7 +547,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         abstractHistoryFunction(historyName, printHistory, redoQuestion, menuName);
     }
 
-
+    // MODIFIES: RestaurantManager
+    // EFFECTS: calls abstractTableFunction for billing a table
     protected static void billTable() {
         PrintFunction printTable = RestaurantManagerPrintAndAllStatusFunctions::printBillTables;
         String enterStatement = "Enter Table Name To Pay Bill For: ";
@@ -522,6 +574,9 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: throws TableForLoopBodyException if all table names do not equal selection or all bills are paid,
+    // otherwise bills table
     private static void billTableForLoop(String selection) throws TableForLoopBodyException {
         boolean forLoopException = true;
         for (Table table : restaurant.getTables()) {
@@ -536,6 +591,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: processes user input and pays for table
     private static void payBill(Table table) {
         System.out.println("\nCost: $" + DF.format(table.getBill().getCost()));
         tips(table);
@@ -545,6 +602,8 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         input.next();
     }
 
+    // MODIFIES: RestaurantManager
+    // EFFECTS: processes user input for tip amount and sets bill's tip to given amount
     private static void tips(Table table) {
         System.out.print("\nEnter Tip Amount: $");
         String selection = input.next();
@@ -562,6 +621,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         }
     }
 
+    // EFFECTS: calls abstractHistoryFunction for cleaningHistory
     protected static void purchaseHistoryTable() {
         String historyName = "Purchase";
         PrintHistoryFunction printHistory = (Table table, String hName) -> {

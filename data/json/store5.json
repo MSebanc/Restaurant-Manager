@@ -1,7 +1,56 @@
 {
-    "tables": [],
-    "name": "Empty Restaurant",
+    "tables": [
+        {
+            "food delivery status": true,
+            "delivery history": [],
+            "max occupancy": 1,
+            "cleaning history": [],
+            "clean status": true,
+            "name": "Cool 1",
+            "purchase history": [],
+            "availability status": true,
+            "bill": {
+                "cost": 0,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": false
+        },
+        {
+            "food delivery status": true,
+            "delivery history": [],
+            "max occupancy": 2,
+            "cleaning history": [],
+            "clean status": true,
+            "name": "Cool 2",
+            "purchase history": [],
+            "availability status": true,
+            "bill": {
+                "cost": 0,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": false
+        },
+        {
+            "food delivery status": true,
+            "delivery history": [],
+            "max occupancy": 3,
+            "cleaning history": [],
+            "clean status": true,
+            "name": "Cool 3",
+            "purchase history": [],
+            "availability status": true,
+            "bill": {
+                "cost": 0,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": false
+        }
+    ],
+    "earnings": 0,
     "total customers": 0,
-    "tips": 0.00,
-    "earnings": 0.00
+    "name": "My Cool Restaurant ",
+    "tips": 0
 }

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+// Represents a reader that reads restaurant from JSON data stored in file: Code structure is based on the project
+// JsonSerializationDemo
 public class JsonReader {
     private String source;
 
@@ -22,7 +24,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads restaurant from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Restaurant read() throws IOException {
         String jsonData = readFile(source);
@@ -41,7 +43,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses restaurant from JSON object and returns it
     private Restaurant parseRestaurant(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         int totalCustomers = jsonObject.getInt("total customers");
@@ -53,7 +55,7 @@ public class JsonReader {
     }
 
     // MODIFIES: r
-    // EFFECTS: parses tables from JSON object and adds them to workroom
+    // EFFECTS: parses tables from JSON object and adds them to restaurant
     private void addTables(Restaurant r, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("tables");
         for (Object json : jsonArray) {
@@ -63,7 +65,7 @@ public class JsonReader {
     }
 
     // MODIFIES: r
-    // EFFECTS: parses table from JSON object and adds it to workroom
+    // EFFECTS: parses table from JSON object and adds it to restaurant
     private void addTable(Restaurant r, JSONObject jsonObject) {
         boolean cleanStatus = jsonObject.getBoolean("clean status");
         boolean setStatus = jsonObject.getBoolean("set status");
@@ -84,6 +86,7 @@ public class JsonReader {
         r.addTableFromJson(t);
     }
 
+    // EFFECTS: converts jsonArray into a list of strings and returns that list
     private List<String> toCleaningHistory(JSONObject jsonObject) {
         JSONArray jsonArrayCleaning = jsonObject.getJSONArray("cleaning history");
         List<String> cleaningHistory = new ArrayList<>();
@@ -94,6 +97,7 @@ public class JsonReader {
         return cleaningHistory;
     }
 
+    // EFFECTS: converts jsonArray into a list of strings and returns that list
     private List<String> toDeliveryHistory(JSONObject jsonObject) {
         JSONArray jsonArrayDelivery = jsonObject.getJSONArray("delivery history");
         List<String> deliveryHistory = new ArrayList<>();
@@ -104,6 +108,7 @@ public class JsonReader {
         return deliveryHistory;
     }
 
+    // EFFECTS: converts jsonArray into a list of strings and returns that list
     private List<String> toPurchaseHistory(JSONObject jsonObject) {
         JSONArray jsonArrayPurchase = jsonObject.getJSONArray("purchase history");
         List<String> purchaseHistory = new ArrayList<>();
@@ -114,6 +119,8 @@ public class JsonReader {
         return purchaseHistory;
     }
 
+    // MODIFIES: t
+    // EFFECTS: parses table from JSON object and adds it to table
     private void addBill(Table t, JSONObject jsonObject) {
         Double cost = jsonObject.getDouble("cost");
         Double tip = jsonObject.getDouble("tip");

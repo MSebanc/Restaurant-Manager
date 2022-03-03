@@ -31,6 +31,8 @@ public class Restaurant implements Writable {
         this.earnings = 0.00;
     }
 
+    // EFFECTS: constructs a restaurant with menu, empty list of tables, given name, given total customers, given tips,
+    // and given earnings
     public Restaurant(String name, int totalCustomers, Double tips, Double earnings) {
         this.menu = new Menu();
         this.tables = new ArrayList<>();
@@ -61,6 +63,9 @@ public class Restaurant implements Writable {
         }
     }
 
+    // REQUIRES: partySize > 0
+    // EFFECTS: returns a list of tables where the table's max occupancy is greater or equal than the party size as well
+    // a valid based on validStatuses(table);
     public List<Table> validTables(int partySize) throws InvalidPartySizeInputException {
         List<Table> validTables = new ArrayList<>();
 
@@ -77,6 +82,10 @@ public class Restaurant implements Writable {
         return validTables;
     }
 
+    // REQUIRES: partySize > 0
+    // MODIFIES: this
+    // EFFECTS: adds party size to totalCustomers and calls findBestTableToAssign with list of the max occupancy of
+    // every table in tables and returns the result
     public Table assignCustomers(List<Table> tables, int partySize) {
         List<Integer> tableMaxOccupancy = new ArrayList<>();
 
@@ -88,6 +97,8 @@ public class Restaurant implements Writable {
         return findBestTableToAssign(tables, tableMaxOccupancy, partySize);
     }
 
+    // REQUIRES: partySize > 0
+    // EFFECTS: returns the table in a list of given tables where the max occupancy is closest to the given partySize
     public Table findBestTableToAssign(List<Table> tables, List<Integer> tableMaxOccupancy,
                                         int partySize) {
         Table bestTableToAssign = null;
@@ -175,6 +186,7 @@ public class Restaurant implements Writable {
         return name;
     }
 
+    // EFFECTS: writes JSON representation of Restaurant and returns it
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -197,6 +209,9 @@ public class Restaurant implements Writable {
         return jsonArray;
     }
 
+    // REQUIRES: table not already in restaurant
+    // MODIFIES: this
+    // EFFECTS: adds given table to tables
     public void addTableFromJson(Table t) {
         tables.add(t);
     }

@@ -12,13 +12,14 @@ public class Bill implements Writable {
     private Double tip;
     private boolean payStatus;
 
-    // EFFECTS: Constructs a bill with amount and tip set to 0 and pay status as false
+    // EFFECTS: Constructs a bill with cost and tip set to 0 and pay status as false
     public Bill() {
         this.cost = 0.00;
         this.tip = 0.00;
         this.payStatus = false;
     }
 
+    // EFFECTS: Constructs a bill with given cost, tip, and payStatus
     public Bill(Double cost, Double tip, boolean payStatus) {
         this.cost = cost;
         this.tip = tip;
@@ -68,6 +69,7 @@ public class Bill implements Writable {
         payStatus = false;
     }
 
+    // EFFECTS: writes JSON representation of Bill and returns it
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

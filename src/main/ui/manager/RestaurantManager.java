@@ -4,6 +4,7 @@ import model.Restaurant;
 import model.Table;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.exceptions.StopRedoException;
 
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
@@ -12,6 +13,7 @@ import java.util.*;
 import static ui.manager.RestaurantManagerFunctions.*;
 import static ui.manager.RestaurantManagerPrintAndAllStatusFunctions.*;
 
+// Restaurant Manager Application: Code structure is loosely based on the project JsonSerializationDemo
 public class RestaurantManager {
 
     protected static final DecimalFormat DF = new DecimalFormat("0.00");
@@ -30,6 +32,8 @@ public class RestaurantManager {
         loadRestaurant();
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input for load menu
     private void loadRestaurant() {
         boolean keepGoing = true;
         String command;
@@ -50,6 +54,7 @@ public class RestaurantManager {
         System.out.println("\nGoodbye!");
     }
 
+    // EFFECTS: displays load menu to user
     private void displayLoadMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\tn -> new restaurant");
@@ -59,11 +64,13 @@ public class RestaurantManager {
         System.out.print("Enter: ");
     }
 
+    // MODIFIES: this, Restaurant
+    // EFFECTS: processes user command for load menu
     private void processLoadCommand(String command) {
         switch (command) {
             case "n":
                 init();
-                System.out.println("Enter New Restaurant Name: ");
+                System.out.print("Enter New Restaurant Name: ");
                 String name = input.next();
                 restaurant = new Restaurant(name);
                 newRestaurant = true;
@@ -74,9 +81,12 @@ public class RestaurantManager {
                 break;
             default:
                 System.out.println("Selection not valid...");
+                break;
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input for loading saved restaurants
     private void loadStoreRestaurant() {
         boolean keepGoing = true;
         String command;
@@ -85,23 +95,24 @@ public class RestaurantManager {
             command = inputLoad.next();
             command = command.toLowerCase();
 
-            if (command.equals("q")) {
-                keepGoing = false;
-            } else {
+            try {
                 processLoadStoreCommand(command);
+            } catch (StopRedoException e) {
+                keepGoing = false;
             }
         }
-
-        System.out.println("\nGoodbye!");
     }
 
+    // EFFECTS: displays save slots to user
     private static void displayLoadStoreMenu() {
         System.out.println("\n\nSelect from:");
         printStores();
         System.out.print("Enter: ");
     }
 
-    private void processLoadStoreCommand(String command) {
+    // MODIFIES: this, Restaurant
+    // EFFECTS: processes user command for loading saved restaurants
+    private void processLoadStoreCommand(String command) throws StopRedoException {
         boolean runRestaurant = true;
         switch (command) {
             case "1":
@@ -122,6 +133,7 @@ public class RestaurantManager {
             default:
                 System.out.println("Selection not valid...");
                 runRestaurant = false;
+                break;
         }
         load(runRestaurant);
     }
@@ -201,8 +213,10 @@ public class RestaurantManager {
                 break;
             case "s":
                 saveRestaurant();
+                break;
             default:
                 System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -214,7 +228,7 @@ public class RestaurantManager {
         input.useDelimiter("\n");
     }
 
-    // EFFECTS: displays main menu of options to user
+    // EFFECTS: displays main menu options to user
     private static void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\ta -> add table");
@@ -287,6 +301,7 @@ public class RestaurantManager {
                 break;
             default:
                 System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -322,6 +337,8 @@ public class RestaurantManager {
         System.out.print("Enter: ");
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user commands for cleaning menu
     private static void processCleanCommand(String command) {
         switch (command) {
             case "c":
@@ -332,6 +349,7 @@ public class RestaurantManager {
                 break;
             default:
                 System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -382,6 +400,7 @@ public class RestaurantManager {
                 break;
             default:
                 System.out.println("Selection not valid...");
+                break;
         }
     }
 
@@ -429,17 +448,25 @@ public class RestaurantManager {
                 break;
             default:
                 System.out.println("Selection not valid...");
+                break;
         }
     }
 
+    // EFFECTS: if newRestaurant is true, saves a new restaurant otherwise saves restaurant
     private static void saveRestaurant() {
         if (newRestaurant) {
             saveNewRestaurant();
         } else {
-            save(true);
+            try {
+                save(true);
+            } catch (StopRedoException e) {
+                // do nothing
+            }
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user input for saving a new restaurant
     private static void saveNewRestaurant() {
         boolean keepGoing = true;
         String command;
@@ -448,23 +475,24 @@ public class RestaurantManager {
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("q")) {
-                keepGoing = false;
-            } else {
+            try {
                 processSaveCommand(command);
+            } catch (StopRedoException e) {
+                keepGoing = false;
             }
         }
-
-        System.out.println("\nGoodbye!");
     }
 
+    // EFFECTS: displays save menu to user
     private static void displaySaveMenu() {
         System.out.println("\n\nChoose A Slot To Save To:");
         printStores();
         System.out.print("Enter: ");
     }
 
-    private static void processSaveCommand(String command) {
+    // MODIFIES: this
+    // EFFECTS: processes user command for saving restaurant
+    private static void processSaveCommand(String command) throws StopRedoException {
         boolean saveRestaurant = true;
         switch (command) {
             case "1":
@@ -485,6 +513,7 @@ public class RestaurantManager {
             default:
                 System.out.println("Selection not valid...");
                 saveRestaurant = false;
+                break;
         }
         save(saveRestaurant);
     }

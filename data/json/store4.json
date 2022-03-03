@@ -1,7 +1,7 @@
 {
     "tables": [],
-    "name": "Empty Restaurant",
+    "earnings": 0,
     "total customers": 0,
-    "tips": 0.00,
-    "earnings": 0.00
+    "name": " Hi I Am Also A Restaurant",
+    "tips": 0
 }

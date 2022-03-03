@@ -27,7 +27,7 @@ public class Table implements Writable {
 
     // EFFECTS: Constructs a table with cleaning status true, set status false, food delivery status true,
     // availability status true, an empty cleaning history, delivery history and purchase history, list, and
-    // given max occupancy, bill to null, and sets name to given name
+    // given max occupancy, creates a new bill, and sets name to given name
     public Table(int max, String name) {
         this.cleanStatus = true;
         this.setStatus = false;
@@ -41,6 +41,8 @@ public class Table implements Writable {
         this.bill = new Bill();
     }
 
+    // EFFECTS: Constructs a table with given cleaning status, set status, availability status, food delivery status
+    // name, maxOccupancy, cleaning history, delivery history, and purchase history and creates a new bill
     public Table(boolean cleanStatus, boolean setStatus, boolean availabilityStatus, boolean foodDeliveryStatus,
                  String name, int maxOccupancy, List<String> cleaningHistory, List<String> deliveryHistory,
                  List<String> purchaseHistory) {
@@ -70,7 +72,7 @@ public class Table implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: sets availability status, clean status, and set status to false and set bill to null
+    // EFFECTS: sets availability status, clean status, and set status to false and sets bill to a new Bill
     public void emptyTable() {
         availabilityStatus = true;
         cleanStatus = false;
@@ -90,7 +92,7 @@ public class Table implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: sets availability status to false and creates a new bill and changes food delivery status to true
+    // EFFECTS: sets availability status to false, sets bill to a new Bill and changes food delivery status to true
     public void occupyTable() {
         availabilityStatus = false;
         foodDeliveryStatus = true;
@@ -165,6 +167,7 @@ public class Table implements Writable {
         availabilityStatus = true;
     }
 
+    // EFFECTS: writes JSON representation of Table and returns it
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -182,6 +185,7 @@ public class Table implements Writable {
         return json;
     }
 
+    // EFFECTS: turns list of strings into a jsonArray and returns the jsonArray
     private JSONArray convertListToJsonArray(List<String> history) {
         JSONArray jsonArray = new JSONArray();
         for (String date : history) {
@@ -190,7 +194,8 @@ public class Table implements Writable {
         return jsonArray;
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: sets bill to given Bill
     public void addBillFromJson(Bill b) {
         bill = b;
     }
