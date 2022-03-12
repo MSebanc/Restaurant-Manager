@@ -72,7 +72,7 @@ public class RestaurantMangerGUI extends JFrame implements ActionListener {
         newPanel.add(new JLabel("Create New Restaurant:"));
         newPanel.add(newButton);
         restaurantPanel.add(newPanel);
-        loadPanel.add(new JLabel("load A Restaurant:"));
+        loadPanel.add(new JLabel("Load A Restaurant:"));
         loadPanel.add(loadButton);
         restaurantPanel.add(loadPanel);
         quitPanel.add(new JLabel("Close Program:"));
