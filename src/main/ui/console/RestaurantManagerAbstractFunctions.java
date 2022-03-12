@@ -5,7 +5,6 @@ import ui.exceptions.StopRedoException;
 import ui.exceptions.TableForLoopBodyException;
 import ui.interfaces.*;
 
-import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.List;
 

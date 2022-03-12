@@ -7,7 +7,6 @@ import persistence.JsonReader;
 import ui.interfaces.AllStatusIfBoolean;
 import ui.interfaces.TableToStringFunction;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 // Restaurant Manager Application (print functions and boolean check functions)

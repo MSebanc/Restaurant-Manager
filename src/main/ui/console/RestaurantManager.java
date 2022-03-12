@@ -6,7 +6,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.exceptions.StopRedoException;
 
-import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.*;
 

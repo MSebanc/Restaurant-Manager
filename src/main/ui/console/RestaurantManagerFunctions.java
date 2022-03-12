@@ -10,7 +10,6 @@ import ui.exceptions.StopRedoException;
 import ui.exceptions.TableForLoopBodyException;
 import ui.interfaces.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static ui.console.RestaurantManagerPrintAndAllStatusFunctions.*;
