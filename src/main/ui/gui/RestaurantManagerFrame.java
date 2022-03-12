@@ -239,13 +239,27 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
 
     private void selectRestaurant() {
         setVisible(false);
-        Table table = restaurant.findTable((String) tableComboBox.getSelectedItem());
-        new TableFrame(table, this);
+        if (!restaurant.getTables().isEmpty()) {
+            Table table = restaurant.findTable((String) tableComboBox.getSelectedItem());
+            new TableFrame(table, this);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Table To Select",
+                    "Table Error Message", JOptionPane.ERROR_MESSAGE,
+                    new ImageIcon("./data/images/!.png"));
+            setVisible(true);
+        }
     }
 
     private void viewTables() {
         setVisible(false);
-        new ViewTablesFrame(restaurant.getTables(), this);
+        if (!restaurant.getTables().isEmpty()) {
+            new ViewTablesFrame(restaurant.getTables(), this);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Tables To Display",
+                    "Table Error Message", JOptionPane.ERROR_MESSAGE,
+                    new ImageIcon("./data/images/!.png"));
+            setVisible(true);
+        }
     }
 
     private void addRestaurant() {
@@ -255,7 +269,23 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
 
     private void assignRestaurant() {
         setVisible(false);
-        new AssignFrame(this);
+        if (!restaurant.getTables().isEmpty() && oneIsValid()) {
+            new AssignFrame(this);
+        } else {
+            JOptionPane.showMessageDialog(this, "No Table To Assign Customers To",
+                    "Table Error Message", JOptionPane.ERROR_MESSAGE,
+                    new ImageIcon("./data/images/!.png"));
+            setVisible(true);
+        }
+    }
+
+    private boolean oneIsValid() {
+        for (Table table : restaurant.getTables()) {
+            if (restaurant.validStatuses(table)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void earningsRestaurant() {
