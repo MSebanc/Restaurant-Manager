@@ -1,4 +1,4 @@
-package ui.manager;
+package ui.console;
 
 import model.Food;
 import model.Table;
@@ -13,13 +13,13 @@ import ui.interfaces.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import static ui.manager.RestaurantManagerPrintAndAllStatusFunctions.*;
+import static ui.console.RestaurantManagerPrintAndAllStatusFunctions.*;
 
 // Restaurant Manager Application (sub functions): Code structure is loosely based on the project JsonSerializationDemo
 public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctions {
 
     // EFFECTS: Constructor
-    public RestaurantManagerFunctions() throws FileNotFoundException {
+    public RestaurantManagerFunctions() {
         // does nothing
     }
 
@@ -582,7 +582,7 @@ public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctio
         for (Table table : restaurant.getTables()) {
             if (selection.equalsIgnoreCase(table.getName()) && !table.getBill().getPayStatus()) {
                 payBill(table);
-                System.out.println("\nOrdered food for " + table.getName() + "!");
+                System.out.println("\nPaid Bill for " + table.getName() + "!");
                 forLoopException = false;
             }
         }

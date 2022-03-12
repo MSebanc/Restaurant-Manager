@@ -49,6 +49,22 @@
                 "tip": 0
             },
             "set status": false
+        },
+        {
+            "food delivery status": true,
+            "delivery history": [],
+            "max occupancy": 4,
+            "cleaning history": [],
+            "clean status": true,
+            "name": "Table 3",
+            "purchase history": [],
+            "availability status": true,
+            "bill": {
+                "cost": 0,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": false
         }
     ],
     "earnings": 19.75,

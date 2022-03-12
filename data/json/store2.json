@@ -1,7 +1,56 @@
 {
-    "tables": [],
+    "tables": [
+        {
+            "food delivery status": false,
+            "delivery history": [],
+            "max occupancy": 4,
+            "cleaning history": [],
+            "clean status": true,
+            "name": "GUI 1",
+            "purchase history": [],
+            "availability status": false,
+            "bill": {
+                "cost": 25.5,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": true
+        },
+        {
+            "food delivery status": true,
+            "delivery history": [],
+            "max occupancy": 6,
+            "cleaning history": [],
+            "clean status": true,
+            "name": "GUI 2",
+            "purchase history": [],
+            "availability status": false,
+            "bill": {
+                "cost": 0,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": true
+        },
+        {
+            "food delivery status": true,
+            "delivery history": [],
+            "max occupancy": 7,
+            "cleaning history": [],
+            "clean status": true,
+            "name": "GUI 3",
+            "purchase history": [],
+            "availability status": true,
+            "bill": {
+                "cost": 0,
+                "pay status": false,
+                "tip": 0
+            },
+            "set status": true
+        }
+    ],
     "earnings": 0,
-    "total customers": 0,
-    "name": "Empty Restaurant",
+    "total customers": 4,
+    "name": "GUI Testing Restaurant",
     "tips": 0
 }

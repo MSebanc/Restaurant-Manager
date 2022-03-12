@@ -1,4 +1,4 @@
-package ui.manager;
+package ui.console;
 
 import model.Restaurant;
 import model.Table;
@@ -10,8 +10,8 @@ import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import static ui.manager.RestaurantManagerFunctions.*;
-import static ui.manager.RestaurantManagerPrintAndAllStatusFunctions.*;
+import static ui.console.RestaurantManagerFunctions.*;
+import static ui.console.RestaurantManagerPrintAndAllStatusFunctions.*;
 
 // Restaurant Manager Application: Code structure is loosely based on the project JsonSerializationDemo
 public class RestaurantManager {
@@ -28,7 +28,7 @@ public class RestaurantManager {
     protected static boolean newRestaurant = false;
 
     // EFFECTS: runs the restaurant application
-    public RestaurantManager() throws FileNotFoundException {
+    public RestaurantManager() {
         loadRestaurant();
     }
 

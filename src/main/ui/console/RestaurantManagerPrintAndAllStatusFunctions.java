@@ -1,4 +1,4 @@
-package ui.manager;
+package ui.console;
 
 import model.Food;
 import model.Restaurant;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class RestaurantManagerPrintAndAllStatusFunctions extends RestaurantManagerFunctions {
 
     // EFFECTS: Constructor
-    public RestaurantManagerPrintAndAllStatusFunctions() throws FileNotFoundException {
+    public RestaurantManagerPrintAndAllStatusFunctions() {
         // does nothing
     }
 

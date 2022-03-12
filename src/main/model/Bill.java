@@ -6,7 +6,7 @@ import persistence.Writable;
 // Represents a bill with cost, tip, and a pay status. Also has a set tax amount.
 public class Bill implements Writable {
 
-    private static final Double TAX = 0.05;
+    public static final Double TAX = 0.05;
 
     private Double cost;
     private Double tip;

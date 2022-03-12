@@ -1,4 +1,4 @@
-package ui.manager;
+package ui.console;
 
 import model.Table;
 import ui.exceptions.StopRedoException;
@@ -13,7 +13,7 @@ import java.util.List;
 public class RestaurantManagerAbstractFunctions extends RestaurantManager {
 
     // EFFECTS: Constructor
-    public RestaurantManagerAbstractFunctions() throws FileNotFoundException {
+    public RestaurantManagerAbstractFunctions() {
         // does nothing
     }
 

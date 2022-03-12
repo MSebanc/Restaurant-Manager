@@ -127,7 +127,7 @@ public class Restaurant implements Writable {
     public Table findTable(String name) {
         Table foundTable = null;
         for (Table table : tables) {
-            if (Objects.equals(table.getName(), name)) {
+            if (name.equalsIgnoreCase(table.getName())) {
                 foundTable = table;
             }
         }
@@ -152,7 +152,7 @@ public class Restaurant implements Writable {
     public void orderFood(String tableName, String foodName) {
         Table table = findTable(tableName);
         for (Food food : menu.getMenu()) {
-            if (Objects.equals(food.getName(), foodName)) {
+            if (foodName.equalsIgnoreCase(food.getName())) {
                 table.getBill().addCost(food.getPrice());
                 table.falseDeliveryStatus();
                 table.getBill().falsePayStatus();
