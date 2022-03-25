@@ -12,6 +12,7 @@ import static ui.gui.RestaurantManagerFrame.DF;
 import static ui.gui.RestaurantManagerFrame.restaurant;
 import static ui.gui.TableFrame.table;
 
+// Frame for when food is being ordered to a table
 public class OrderFrame extends JFrame implements ActionListener {
 
     private TableFrame previousFrame;
@@ -24,6 +25,7 @@ public class OrderFrame extends JFrame implements ActionListener {
     private JButton quitButton;
     private JButton enterButton;
 
+    // EFFECTS: Constructs Frame
     public OrderFrame(TableFrame previousFrame) {
         super("Order Food For " + table.getName());
 
@@ -43,6 +45,8 @@ public class OrderFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JTextFields and JButtons
     private void createTextFieldsAndButtons() {
         foodTextField = new JTextField(15);
 
@@ -59,6 +63,8 @@ public class OrderFrame extends JFrame implements ActionListener {
         viewButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         orderPanel = new JPanel();
         foodPanel = new JPanel();
@@ -66,6 +72,8 @@ public class OrderFrame extends JFrame implements ActionListener {
         viewPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         orderPanel.setLayout(new GridLayout(4, 1));
 
@@ -87,6 +95,8 @@ public class OrderFrame extends JFrame implements ActionListener {
         orderPanel.add(quitPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
@@ -106,6 +116,7 @@ public class OrderFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: returns string of menu
     private String printMenu() {
         StringBuilder menuString =  new StringBuilder();
         menuString.append("Menu:");
@@ -118,6 +129,8 @@ public class OrderFrame extends JFrame implements ActionListener {
         return menuString.toString();
     }
 
+    // MODIFIES: this, table
+    // EFFECTS: orders food to table using user input
     private void orderFood() {
         try {
             for (Food food: restaurant.getMenu()) {

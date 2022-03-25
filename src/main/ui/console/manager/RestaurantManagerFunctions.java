@@ -1,4 +1,4 @@
-package ui.console;
+package ui.console.manager;
 
 import model.Food;
 import model.Table;
@@ -8,11 +8,11 @@ import ui.exceptions.InvalidNameEnteredException;
 import ui.exceptions.InvalidNumberException;
 import ui.exceptions.StopRedoException;
 import ui.exceptions.TableForLoopBodyException;
-import ui.interfaces.*;
+import ui.console.interfaces.*;
 
 import java.io.IOException;
 
-import static ui.console.RestaurantManagerPrintAndAllStatusFunctions.*;
+import static ui.console.manager.RestaurantManagerPrintAndAllStatusFunctions.*;
 
 // Restaurant Manager Application (sub functions): Code structure is loosely based on the project JsonSerializationDemo
 public class RestaurantManagerFunctions extends RestaurantManagerAbstractFunctions {

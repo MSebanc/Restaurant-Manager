@@ -9,6 +9,7 @@ public class SplashScreen {
     private long startTime;
     private int minimumMilliseconds;
 
+    // EFFECTS: Constructs SplashScreen
     public SplashScreen() {
         window = new JWindow();
         ImageIcon image = new ImageIcon("./data/images/loading.gif");
@@ -19,12 +20,16 @@ public class SplashScreen {
                 image.getIconWidth(), image.getIconHeight());
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets minimumMilliseconds to given integer
     public void show(int minimumMilliseconds) {
         this.minimumMilliseconds = minimumMilliseconds;
         window.setVisible(true);
         startTime = System.currentTimeMillis();
     }
 
+    // MODIFIES: this
+    // EFFECTS: closes splashscreen once time is up
     public void hide() {
         long elapsedTime = System.currentTimeMillis() - startTime;
         try {

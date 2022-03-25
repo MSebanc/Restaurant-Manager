@@ -1,11 +1,11 @@
-package ui.console;
+package ui.console.manager;
 
 import model.Food;
 import model.Restaurant;
 import model.Table;
 import persistence.JsonReader;
-import ui.interfaces.AllStatusIfBoolean;
-import ui.interfaces.TableToStringFunction;
+import ui.console.interfaces.AllStatusIfBoolean;
+import ui.console.interfaces.TableToStringFunction;
 
 import java.io.IOException;
 

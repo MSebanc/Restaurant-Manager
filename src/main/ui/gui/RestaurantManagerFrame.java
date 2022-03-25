@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 
+// Frame for restaurant commands
 public class RestaurantManagerFrame extends JFrame implements ActionListener {
 
     static final DecimalFormat DF = new DecimalFormat("0.00");
@@ -40,6 +41,7 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
     private JButton selectButton;
     private JButton quitButton;
 
+    // EFFECTS: Constructs Frame
     public RestaurantManagerFrame(Restaurant restaurant, String jsonStore, RestaurantMangerGUI gui) {
         super(restaurant.getName() + " Manager");
 
@@ -63,6 +65,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JComboBox
     private void createComboBox() {
         tableComboBox = new JComboBox<>();
         for (Table table : restaurant.getTables()) {
@@ -70,6 +74,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JButtons
     private void createButtons1() {
         addButton = new JButton("Add Table");
         addButton.setActionCommand("add");
@@ -90,6 +96,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         createButtons2();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JButtons
     private void createButtons2() {
         earningsButton = new JButton("Earnings");
         earningsButton.setActionCommand("earnings");
@@ -108,6 +116,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         quitButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         restaurantPanel = new JPanel();
         tablePanel = new JPanel();
@@ -120,6 +130,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         savePanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame1() {
         restaurantPanel.setLayout(new GridLayout(8, 1));
 
@@ -143,6 +155,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         createFrame2();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame2() {
         assignPanel.add(new JLabel("Assign Customer Party To A Table:"));
         assignPanel.add(assignButton);
@@ -161,6 +175,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         restaurantPanel.add(quitPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -177,6 +193,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     private void actionPerformed2(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "add":
@@ -197,12 +215,14 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: displays restaurant manager information to user
     private void infoRestaurant() {
         JOptionPane.showMessageDialog(this, infoMessage(),
                 "Info", JOptionPane.INFORMATION_MESSAGE,
                 new ImageIcon("./data/images/info.png"));
     }
 
+    // EFFECTS: returns string of restaurant manager information
     private String infoMessage() {
         return "\nWelcome to the " + restaurant.getName() + " Restaurant Manager, here is some basic information to"
                 + " get started:"
@@ -217,6 +237,7 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
                 + actionsList();
     }
 
+    // EFFECTS: returns string of restaurant manager actions
     private String actionsList() {
         return "\n\nComplete list of prerequisite actions before action can be called:"
                 + "\n\tAdd Table: Nothing"
@@ -237,6 +258,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
                 + "\n\tCheck History (purchase, cleaning, or delivery history): Add Table";
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user information and creates a TableFrame for selected table
     private void selectRestaurant() {
         setVisible(false);
         if (!restaurant.getTables().isEmpty()) {
@@ -250,6 +273,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame for viewing all the tables
     private void viewTables() {
         setVisible(false);
         if (!restaurant.getTables().isEmpty()) {
@@ -262,11 +287,15 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates AddFrame
     private void addRestaurant() {
         setVisible(false);
         new AddFrame(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates assign frame
     private void assignRestaurant() {
         setVisible(false);
         if (!restaurant.getTables().isEmpty() && oneIsValid()) {
@@ -279,6 +308,7 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: returns true if one table is valid
     private boolean oneIsValid() {
         for (Table table : restaurant.getTables()) {
             if (restaurant.validStatuses(table)) {
@@ -288,6 +318,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays restaurant earnings to customer
     private void earningsRestaurant() {
         setVisible(false);
         JOptionPane.showMessageDialog(this, earningsMessage(),
@@ -296,6 +328,7 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // EFFECTS: returns string of restaurant earnings
     private String earningsMessage() {
         return restaurant.getName() + " has made $" + DF.format(restaurant.getEarnings()) + "!"
                 + "\nThere has also been $" + DF.format(restaurant.getTips()) + " in tips!"
@@ -303,6 +336,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
                 + "!";
     }
 
+    // MODIFIES: this
+    // EFFECTS: saves restaurant to file
     private void saveRestaurant() {
         try {
             jsonWriter.open();
@@ -323,6 +358,8 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets visibility of frame to false and sets visibility of gui frame to true
     private void closeRestaurant() {
         setVisible(false);
         gui.setVisible(true);

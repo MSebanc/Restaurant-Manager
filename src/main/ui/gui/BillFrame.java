@@ -12,6 +12,7 @@ import static ui.gui.RestaurantManagerFrame.DF;
 import static ui.gui.RestaurantManagerFrame.restaurant;
 import static ui.gui.TableFrame.table;
 
+// Frame for when a table is being billed
 public class BillFrame extends JFrame implements ActionListener {
 
     private TableFrame previousFrame;
@@ -22,6 +23,7 @@ public class BillFrame extends JFrame implements ActionListener {
     private JButton quitButton;
     private JButton enterButton;
 
+    // EFFECTS: Constructs Frame
     public BillFrame(TableFrame previousFrame) {
         super("Bill " + table.getName());
 
@@ -41,6 +43,8 @@ public class BillFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JTextFields and JButtons
     private void createTextFieldsAndButtons() {
         tipsTextField = new JTextField(15);
 
@@ -53,12 +57,16 @@ public class BillFrame extends JFrame implements ActionListener {
         enterButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         billPanel = new JPanel();
         tipsPanel = new JPanel();
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         billPanel.setLayout(new GridLayout(4, 1));
 
@@ -79,6 +87,8 @@ public class BillFrame extends JFrame implements ActionListener {
         billPanel.add(quitPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
@@ -92,6 +102,8 @@ public class BillFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Restaurant, Table, Bill
+    // EFFECTS: bills and displays receipt using user input
     private void billTable() {
         try {
             double tip = Double.parseDouble(tipsTextField.getText());
@@ -116,6 +128,7 @@ public class BillFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: displays invalid name error message
     private void invalidNumberMessage() {
         JOptionPane.showMessageDialog(this, "Invalid Tips Input",
                 "Failed Tips Message", JOptionPane.ERROR_MESSAGE,

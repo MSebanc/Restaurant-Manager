@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// Frame for when all table information needs to be shown
 public class ViewTablesFrame extends JFrame implements ActionListener {
 
     private List<Table> tables;
@@ -19,6 +20,7 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
     private JButton quitButton;
     private JTextArea textArea;
 
+    // EFFECTS: Constructs Frame
     public ViewTablesFrame(List<Table> tables, RestaurantManagerFrame previousFrame) {
         super("Tables");
 
@@ -39,6 +41,8 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JScrollPane and JButtons
     private void createButtonsAndScrollBar() {
         quitButton = new JButton("Close");
         quitButton.setActionCommand("close");
@@ -49,11 +53,15 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
         scrollPane = new JScrollPane(textArea);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         tablesPanel = new JPanel();
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         tablesPanel.setLayout(new BorderLayout());
 
@@ -66,6 +74,7 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
 
     }
 
+    // EFFECTS: returns string of all table information
     private String stringTables() {
         StringBuilder tablesString = new StringBuilder();
         tablesString.append("--------------------------------------------------------------------------\n");
@@ -86,6 +95,7 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
         return tablesString.toString();
     }
 
+    // EFFECTS: returns string of table history
     private String tableHistory(Table table) {
         StringBuilder tablesString = new StringBuilder();
         tablesString.append("\n\tCleaning History: ");
@@ -105,6 +115,8 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
         return tablesString.toString();
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("close".equals(e.getActionCommand())) {

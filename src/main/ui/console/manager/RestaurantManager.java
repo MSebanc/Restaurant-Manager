@@ -1,4 +1,4 @@
-package ui.console;
+package ui.console.manager;
 
 import model.Restaurant;
 import model.Table;
@@ -9,8 +9,8 @@ import ui.exceptions.StopRedoException;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import static ui.console.RestaurantManagerFunctions.*;
-import static ui.console.RestaurantManagerPrintAndAllStatusFunctions.*;
+import static ui.console.manager.RestaurantManagerFunctions.*;
+import static ui.console.manager.RestaurantManagerPrintAndAllStatusFunctions.*;
 
 // Restaurant Manager Application: Code structure is loosely based on the project JsonSerializationDemo
 public class RestaurantManager {

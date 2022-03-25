@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import static ui.gui.TableFrame.table;
 
+// Frame for when the information for a table needs to be shown
 public class ViewTableFrame extends JFrame implements ActionListener {
 
     private TableFrame previousFrame;
@@ -16,6 +17,7 @@ public class ViewTableFrame extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
     private JButton quitButton;
 
+    // EFFECTS: Constructs Frame
     public ViewTableFrame(TableFrame previousFrame) {
         super(table.getName());
 
@@ -35,6 +37,8 @@ public class ViewTableFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JScrollPane and JButtons
     private void createButtonsAndScrollBar() {
         quitButton = new JButton("Close");
         quitButton.setActionCommand("close");
@@ -45,11 +49,15 @@ public class ViewTableFrame extends JFrame implements ActionListener {
         scrollPane = new JScrollPane(textArea);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         tablePanel = new JPanel();
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         tablePanel.setLayout(new BorderLayout());
 
@@ -62,6 +70,7 @@ public class ViewTableFrame extends JFrame implements ActionListener {
 
     }
 
+    // EFFECTS: returns string of table information
     private String stringTable() {
         return table.getName() + ":"
                 + "\n\tMax Occupancy: " + table.getMaxOccupancy()
@@ -76,6 +85,7 @@ public class ViewTableFrame extends JFrame implements ActionListener {
                 + "\n\t\tPay Status: " + table.getBill().getPayStatus();
     }
 
+    // EFFECTS: returns string of table history
     private String tableHistory() {
         StringBuilder tablesString = new StringBuilder();
         tablesString.append("\n\tCleaning History: ");
@@ -95,6 +105,8 @@ public class ViewTableFrame extends JFrame implements ActionListener {
         return tablesString.toString();
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("close".equals(e.getActionCommand())) {

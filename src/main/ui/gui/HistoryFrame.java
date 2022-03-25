@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import static ui.gui.TableFrame.table;
 
+// Frame for when table history is requested
 public class HistoryFrame extends JFrame implements ActionListener {
 
     private String history;
@@ -17,6 +18,7 @@ public class HistoryFrame extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
     private JButton quitButton;
 
+    // EFFECTS: Constructs Frame
     public HistoryFrame(TableFrame previousFrame, String history) {
         super(history);
 
@@ -37,6 +39,8 @@ public class HistoryFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JScrollPane and JButtons
     private void createButtonsAndScrollBar() {
         quitButton = new JButton("Close");
         quitButton.setActionCommand("close");
@@ -47,11 +51,15 @@ public class HistoryFrame extends JFrame implements ActionListener {
         scrollPane = new JScrollPane(textArea);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         historyPanel = new JPanel();
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         historyPanel.setLayout(new BorderLayout());
 
@@ -64,6 +72,7 @@ public class HistoryFrame extends JFrame implements ActionListener {
 
     }
 
+    // EFFECTS: returns a string of table history
     private String tableHistory() {
         StringBuilder tablesString = new StringBuilder();
 
@@ -91,6 +100,8 @@ public class HistoryFrame extends JFrame implements ActionListener {
         return tablesString.toString();
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("close".equals(e.getActionCommand())) {

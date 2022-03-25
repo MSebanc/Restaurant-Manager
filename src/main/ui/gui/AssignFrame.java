@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 
 import static ui.gui.RestaurantManagerFrame.restaurant;
 
+// Frame for assigning parties to tables
 public class AssignFrame extends JFrame implements ActionListener {
 
     private RestaurantManagerFrame previousFrame;
@@ -20,6 +21,7 @@ public class AssignFrame extends JFrame implements ActionListener {
     private JButton quitButton;
     private JButton enterButton;
 
+    // EFFECTS: Constructs Frame
     public AssignFrame(RestaurantManagerFrame previousFrame) {
         super("Assign Customers To Table");
 
@@ -39,6 +41,8 @@ public class AssignFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JTextFields and JButtons
     private void createTextFieldsAndButtons() {
         numTextField = new JTextField(15);
 
@@ -51,12 +55,16 @@ public class AssignFrame extends JFrame implements ActionListener {
         enterButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         assignPanel = new JPanel();
         numPanel = new JPanel();
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         assignPanel.setLayout(new GridLayout(3, 1));
 
@@ -74,6 +82,8 @@ public class AssignFrame extends JFrame implements ActionListener {
         assignPanel.add(quitPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
@@ -87,6 +97,8 @@ public class AssignFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, restaurant
+    // EFFECTS: assigns customer to a table using user input
     private void assignCustomersToTable() {
         try {
             int partySize = Integer.parseInt(numTextField.getText());

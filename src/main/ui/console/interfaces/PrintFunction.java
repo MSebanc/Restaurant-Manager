@@ -1,4 +1,4 @@
-package ui.interfaces;
+package ui.console.interfaces;
 
 // Interface for lambda functions that prints tables
 public interface PrintFunction {

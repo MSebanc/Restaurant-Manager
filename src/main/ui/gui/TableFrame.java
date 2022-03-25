@@ -12,6 +12,7 @@ import java.util.Objects;
 import static ui.gui.RestaurantManagerFrame.restaurant;
 import static ui.gui.RestaurantManagerFrame.tableComboBox;
 
+// Frame for table commands
 public class TableFrame extends JFrame implements ActionListener {
 
     private RestaurantManagerFrame previousFrame;
@@ -34,6 +35,7 @@ public class TableFrame extends JFrame implements ActionListener {
     private JComboBox<String> actionComboBox;
     private JComboBox<String> historyComboBox;
 
+    // EFFECTS: Constructs Frame
     public TableFrame(Table table, RestaurantManagerFrame previousFrame) {
         super(table.getName() + " Manager");
 
@@ -55,6 +57,8 @@ public class TableFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JComboBoxes
     private void createComboBoxes() {
         statusComboBox = new JComboBox<>();
         statusComboBox.addItem("Mark Table As Clean");
@@ -72,6 +76,8 @@ public class TableFrame extends JFrame implements ActionListener {
         historyComboBox.addItem("Purchase History");
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JButtons
     private void createButtons() {
         selectButton1 = new JButton("Select");
         selectButton1.setActionCommand("select1");
@@ -98,6 +104,8 @@ public class TableFrame extends JFrame implements ActionListener {
         removeButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         tablePanel = new JPanel();
         viewPanel = new JPanel();
@@ -108,6 +116,8 @@ public class TableFrame extends JFrame implements ActionListener {
         removePanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         tablePanel.setLayout(new GridLayout(6, 1));
 
@@ -140,6 +150,8 @@ public class TableFrame extends JFrame implements ActionListener {
         tablePanel.add(quitPanel);
     }
 
+    // MODIFIES: this
+    // Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -164,6 +176,8 @@ public class TableFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes user input
     private void statusTable() {
         switch ((String) Objects.requireNonNull(statusComboBox.getSelectedItem())) {
             case "Mark Table As Clean":
@@ -181,6 +195,8 @@ public class TableFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Table
+    // EFFECTS: cleans table and displays success/fail message
     private void cleanTable() {
         setVisible(false);
 
@@ -199,6 +215,8 @@ public class TableFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this, Table
+    // EFFECTS: sets table and displays success/fail message
     private void setTable() {
         setVisible(false);
 
@@ -217,6 +235,8 @@ public class TableFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this, Table
+    // EFFECTS: marks table as vacant and displays success/fail message
     private void vacantTable() {
         setVisible(false);
 
@@ -236,6 +256,8 @@ public class TableFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this, Table
+    // EFFECTS: delivers food to table and displays success/fail message
     private void deliverTable() {
 
         setVisible(false);
@@ -257,6 +279,8 @@ public class TableFrame extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes user input
     private void actionTable() {
         switch ((String) Objects.requireNonNull(actionComboBox.getSelectedItem())) {
             case "Order Food":
@@ -268,6 +292,8 @@ public class TableFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates OrderFrame
     private void orderTable() {
         setVisible(false);
         if (table.getAvailabilityStatus()) {
@@ -280,6 +306,8 @@ public class TableFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates BillFrame if table is able to be billed, otherwise shows error message
     private void billTable() {
         setVisible(false);
         if (table.getAvailabilityStatus()) {
@@ -302,6 +330,8 @@ public class TableFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes user input
     private void viewHistoryTable() {
         setVisible(false);
         switch ((String) Objects.requireNonNull(historyComboBox.getSelectedItem())) {
@@ -317,11 +347,15 @@ public class TableFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates ViewTableFrame
     private void viewTable() {
         setVisible(false);
         new ViewTableFrame(this);
     }
 
+    // MODIFIES: this, Restaurant
+    // EFFECTS: prompts user if they want to remove the table and processes user response
     private void removeTable() {
         try {
             setVisible(false);
@@ -338,6 +372,8 @@ public class TableFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this, Restaurant
+    // EFFECTS: removes table from restaurant and displays success message
     private void removeTableFromRestaurant() {
         restaurant.removeTable(table.getName());
         JOptionPane.showMessageDialog(this, table.getName() + " has been successfully removed!",
@@ -348,6 +384,8 @@ public class TableFrame extends JFrame implements ActionListener {
         previousFrame.setVisible(true);
     }
 
+    // MODIFIES: this, RestaurantManagerFrame
+    // EFFECTS: returns to restaurant manager
     private void closeTable() {
         setVisible(false);
         previousFrame.setVisible(true);

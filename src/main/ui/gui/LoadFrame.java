@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// Frame for when a restaurant is being loaded
 public class LoadFrame extends JFrame implements ActionListener {
 
     private RestaurantMangerGUI previousFrame;
@@ -26,6 +27,7 @@ public class LoadFrame extends JFrame implements ActionListener {
     private JButton store5Button;
     private JButton quitButton;
 
+    // EFFECTS: Constructs Frame
     public LoadFrame(RestaurantMangerGUI previousFrame) {
         super("Load Restaurant");
 
@@ -45,6 +47,8 @@ public class LoadFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JButtons
     private void createButtons() {
         store1Button = new JButton("Current Restaurant: "
                 + getRestaurantNameFromJson("./data/json/store1.json"));
@@ -71,6 +75,7 @@ public class LoadFrame extends JFrame implements ActionListener {
         quitButton.addActionListener(this);
     }
 
+    // EFFECTS: returns restaurant name from file
     public String getRestaurantNameFromJson(String jsonStore) {
         JsonReader jsonReader = new JsonReader(jsonStore);
 
@@ -82,6 +87,8 @@ public class LoadFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         newPanel = new JPanel();
         store1Panel = new JPanel();
@@ -92,6 +99,8 @@ public class LoadFrame extends JFrame implements ActionListener {
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         newPanel.setLayout(new GridLayout(7, 1));
 
@@ -124,6 +133,9 @@ public class LoadFrame extends JFrame implements ActionListener {
         newPanel.add(quitPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
+    @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "store1":
@@ -148,6 +160,7 @@ public class LoadFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: loads restaurant from file
     private void loadRestaurant(String jsonStore) {
         Restaurant restaurant;
         JsonReader jsonReader = new JsonReader(jsonStore);

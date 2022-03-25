@@ -1,9 +1,9 @@
-package ui.console;
+package ui.console.manager;
 
 import model.Table;
 import ui.exceptions.StopRedoException;
 import ui.exceptions.TableForLoopBodyException;
-import ui.interfaces.*;
+import ui.console.interfaces.*;
 
 import java.util.Collections;
 import java.util.List;

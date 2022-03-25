@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Frame for when a name is needed for a new restaurant
 public class NameFrame extends JFrame implements ActionListener {
 
     private NewFrame previousFrame;
@@ -20,6 +21,7 @@ public class NameFrame extends JFrame implements ActionListener {
     private String jsonStore;
     private RestaurantMangerGUI gui;
 
+    // EFFECTS: Constructs Frame
     public NameFrame(String jsonStore, NewFrame previousFrame, RestaurantMangerGUI gui) {
         super("Name Restaurant");
 
@@ -41,6 +43,8 @@ public class NameFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JTextFields and JButtons
     private void createTextFieldsAndButtons() {
         newNameTextField = new JTextField(15);
 
@@ -53,12 +57,16 @@ public class NameFrame extends JFrame implements ActionListener {
         enterButton.addActionListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         namePanel = new JPanel();
         newNamePanel = new JPanel();
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         namePanel.setLayout(new GridLayout(3, 1));
 
@@ -76,6 +84,8 @@ public class NameFrame extends JFrame implements ActionListener {
         namePanel.add(quitPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// Frame for when a table is being added to restaurant
 public class NewFrame extends JFrame implements ActionListener {
 
     private RestaurantMangerGUI previousFrame;
@@ -26,6 +27,7 @@ public class NewFrame extends JFrame implements ActionListener {
     private JButton store5Button;
     private JButton quitButton;
 
+    // EFFECTS: Constructs Frame
     public NewFrame(RestaurantMangerGUI previousFrame) {
         super("Create New Restaurant");
 
@@ -45,6 +47,8 @@ public class NewFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JButtons
     private void createButtons() {
         store1Button = new JButton("Current Restaurant: "
                 + getRestaurantNameFromJson("./data/json/store1.json"));
@@ -71,6 +75,7 @@ public class NewFrame extends JFrame implements ActionListener {
         quitButton.addActionListener(this);
     }
 
+    // EFFECTS: returns restaurant name from file
     public String getRestaurantNameFromJson(String jsonStore) {
         JsonReader jsonReader = new JsonReader(jsonStore);
 
@@ -82,6 +87,8 @@ public class NewFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JPanels
     private void createPanels() {
         newPanel = new JPanel();
         store1Panel = new JPanel();
@@ -92,6 +99,8 @@ public class NewFrame extends JFrame implements ActionListener {
         quitPanel = new JPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates frame by adding JObjects to each other
     private void createFrame() {
         newPanel.setLayout(new GridLayout(7, 1));
 
@@ -125,6 +134,9 @@ public class NewFrame extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
+    @Override
     public void actionPerformed(ActionEvent e) {
         if ("back".equals(e.getActionCommand())) {
             setVisible(false);
@@ -134,6 +146,7 @@ public class NewFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: displays prompt to user if they want to use storage slot and processes user input
     private void newRestaurant(ActionEvent e) {
         try {
             setVisible(false);
@@ -151,6 +164,8 @@ public class NewFrame extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: Processes Action Listener commands
     private void newRestaurantSwitch(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "store1":
@@ -171,6 +186,7 @@ public class NewFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: creates a NewFrame with jsonStore
     private void createNewRestaurant(String jsonStore) {
         setVisible(false);
         new NameFrame(jsonStore, this, previousFrame);
