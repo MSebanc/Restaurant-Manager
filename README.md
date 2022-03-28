@@ -44,7 +44,8 @@
 - As a user, I want to be able to save up to 5 of my restaurants along with all of its tables to file
 - As a user, I want to be able to load up to 5 of my restaurant along with all of its tables from file
 
-### Event Log Representable Sample
+### Phase 4: Task 2
+###### Event Log Representable Sample:
     Sun Mar 27 21:50:50 PDT 2022
     Added Table 1 to Log Test Restaurant
     Sun Mar 27 21:50:59 PDT 2022
