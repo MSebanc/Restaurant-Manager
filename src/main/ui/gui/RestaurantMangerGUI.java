@@ -1,9 +1,12 @@
 package ui.gui;
 
+import model.EventLog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
 // Restaurant Manager GUI
 public class RestaurantMangerGUI extends JFrame implements ActionListener {
@@ -108,8 +111,16 @@ public class RestaurantMangerGUI extends JFrame implements ActionListener {
                 new LoadFrame(this);
                 break;
             case "quit":
+                printLog();
                 System.exit(0);
                 break;
+        }
+    }
+
+    // EFFECTS: prints event log to console
+    private void printLog() {
+        for (model.Event event : EventLog.getInstance()) {
+            System.out.println(event);
         }
     }
 }

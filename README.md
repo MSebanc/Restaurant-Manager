@@ -43,4 +43,25 @@
 - As a user, I want to bill customers when needed and keep track of when it was paid
 - As a user, I want to be able to save up to 5 of my restaurants along with all of its tables to file
 - As a user, I want to be able to load up to 5 of my restaurant along with all of its tables from file
+
+### Event Log Representable Sample
+    Sun Mar 27 21:50:50 PDT 2022
+    Added Table 1 to Log Test Restaurant
+    Sun Mar 27 21:50:59 PDT 2022
+    Added Table 2 to Log Test Restaurant
+    Sun Mar 27 21:51:11 PDT 2022
+    Added Table 3 to Log Test Restaurant
+    Sun Mar 27 21:51:18 PDT 2022
+    Added Table 4 to Log Test Restaurant
+    Sun Mar 27 21:51:27 PDT 2022
+    Added Table 5 to Log Test Restaurant
+    Sun Mar 27 21:51:38 PDT 2022
+    Removed Table 5 from Log Test Restaurant
+    Sun Mar 27 21:51:42 PDT 2022
+    Removed Table 4 from Log Test Restaurant
+    Sun Mar 27 21:51:47 PDT 2022
+    Removed Table 3 from Log Test Restaurant
+    Sun Mar 27 21:51:57 PDT 2022
+    Added Table 3 to Log Test Restaurant
+
  

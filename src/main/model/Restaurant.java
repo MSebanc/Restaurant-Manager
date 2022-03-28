@@ -44,19 +44,21 @@ public class Restaurant implements Writable {
 
     // REQUIRES: name not already in list of tables, name is not null, max > 0
     // MODIFIES: this
-    // EFFECTS: adds table with given name and given max to list of tables
+    // EFFECTS: adds table with given name and given max to list of tables and logs event
     public void addTable(int max, String name) {
         tables.add(new Table(max, name));
+        EventLog.getInstance().logEvent(new Event("Added " + name + " to " + this.name));
     }
 
     // REQUIRES: name is in list of tables
     // MODIFIES: this
-    // EFFECTS: removes table with given name from list of tables
+    // EFFECTS: removes table with given name from list of tables and logs event
     public void removeTable(String name) {
         int index = 0;
         for (Table table : tables) {
             if (table.getName().equalsIgnoreCase(name)) {
                 tables.remove(index);
+                EventLog.getInstance().logEvent(new Event("Removed " + name + " from " + this.name));
                 break;
             }
             index++;
