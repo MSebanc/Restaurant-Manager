@@ -13,6 +13,8 @@ import java.io.IOException;
 public class LoadFrame extends JFrame implements ActionListener {
 
     private RestaurantMangerGUI previousFrame;
+    private JsonReader jsonReader;
+
     private JPanel newPanel;
     private JPanel store1Panel;
     private JPanel store2Panel;
@@ -163,7 +165,7 @@ public class LoadFrame extends JFrame implements ActionListener {
     // EFFECTS: loads restaurant from file
     private void loadRestaurant(String jsonStore) {
         Restaurant restaurant;
-        JsonReader jsonReader = new JsonReader(jsonStore);
+        jsonReader = new JsonReader(jsonStore);
         try {
             restaurant = jsonReader.read();
 

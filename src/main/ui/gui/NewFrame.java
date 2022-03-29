@@ -13,6 +13,8 @@ import java.io.IOException;
 public class NewFrame extends JFrame implements ActionListener {
 
     private RestaurantMangerGUI previousFrame;
+    private JsonReader jsonReader;
+
     private JPanel newPanel;
     private JPanel store1Panel;
     private JPanel store2Panel;
@@ -77,7 +79,7 @@ public class NewFrame extends JFrame implements ActionListener {
 
     // EFFECTS: returns restaurant name from file
     public String getRestaurantNameFromJson(String jsonStore) {
-        JsonReader jsonReader = new JsonReader(jsonStore);
+        jsonReader = new JsonReader(jsonStore);
 
         try {
             return jsonReader.read().getName();
