@@ -8,10 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import static ui.gui.RestaurantManagerFrame.restaurant;
+
 // Frame for when all table information needs to be shown
 public class ViewTablesFrame extends JFrame implements ActionListener {
 
-    private List<Table> tables;
     private RestaurantManagerFrame previousFrame;
 
     private JPanel tablesPanel;
@@ -21,10 +22,9 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
     private JTextArea textArea;
 
     // EFFECTS: Constructs Frame
-    public ViewTablesFrame(List<Table> tables, RestaurantManagerFrame previousFrame) {
+    public ViewTablesFrame(RestaurantManagerFrame previousFrame) {
         super("Tables");
 
-        this.tables = tables;
         this.previousFrame = previousFrame;
 
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -78,7 +78,7 @@ public class ViewTablesFrame extends JFrame implements ActionListener {
     private String stringTables() {
         StringBuilder tablesString = new StringBuilder();
         tablesString.append("--------------------------------------------------------------------------\n");
-        for (Table table : tables) {
+        for (Table table : restaurant.getTables()) {
             tablesString.append(table.getName()).append(":")
                     .append("\n\tMax Occupancy: ").append(table.getMaxOccupancy())
                     .append("\n\tClean Status: ").append(table.getCleanStatus())

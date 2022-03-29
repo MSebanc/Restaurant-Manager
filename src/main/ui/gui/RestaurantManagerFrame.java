@@ -278,7 +278,7 @@ public class RestaurantManagerFrame extends JFrame implements ActionListener {
     private void viewTables() {
         setVisible(false);
         if (!restaurant.getTables().isEmpty()) {
-            new ViewTablesFrame(restaurant.getTables(), this);
+            new ViewTablesFrame(this);
         } else {
             JOptionPane.showMessageDialog(this, "No Tables To Display",
                     "Table Error Message", JOptionPane.ERROR_MESSAGE,
