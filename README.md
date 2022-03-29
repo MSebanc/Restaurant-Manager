@@ -65,4 +65,17 @@
     Sun Mar 27 21:51:57 PDT 2022
     Added Table 3 to Log Test Restaurant
 
- 
+### Phase 4: Task 3
+###### UML Class Diagram:
+![](UML_Design_Diagram.png)
+###### Reflection On Diagram:
+- When I was working on my UML Class Diagram in the GUI package, I noticed how many similar associations there was to 
+the same class. For example, the TableFrame class has four classes with an association of multiplicity of 1 to it. So,
+I looked at those classes and noticed that they are all very similar. If I had more time, to improve the design of my 
+code, I would create an abstract frame class to cut down the number of associations to just one class. This would make 
+the code easier to follow and the UML diagram would be easier to read. I did not utilize hierarchies in my code enough 
+and my design would benefit from it. Also, some classes may be able to be combined into one class if I had more time to 
+figure that out. That would also make my code and UML class diagram more readable. Apart from that, there isn't much 
+more refactoring that needs to be done.
+
+
