@@ -1,8 +1,5 @@
 package model;
 
-import org.json.JSONObject;
-import persistence.Writable;
-
 // Represents a food item with a name and price
 public class Food {
 
