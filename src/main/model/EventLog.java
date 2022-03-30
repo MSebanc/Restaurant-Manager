@@ -15,7 +15,7 @@ public class EventLog implements Iterable<model.Event> {
      * the only EventLog in the system (Singleton Design Pattern)
      */
     private static EventLog theLog;
-    private Collection<model.Event> events;
+    private Collection<Event> events;
 
     /**
      * Prevent external construction.
@@ -45,7 +45,7 @@ public class EventLog implements Iterable<model.Event> {
      *
      * @param e the event to be added
      */
-    public void logEvent(model.Event e) {
+    public void logEvent(Event e) {
         events.add(e);
     }
 
@@ -54,11 +54,11 @@ public class EventLog implements Iterable<model.Event> {
      */
     public void clear() {
         events.clear();
-        logEvent(new model.Event("Event log cleared."));
+        logEvent(new Event("Event log cleared."));
     }
 
     @Override
-    public Iterator<model.Event> iterator() {
+    public Iterator<Event> iterator() {
         return events.iterator();
     }
 }
