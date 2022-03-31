@@ -216,6 +216,7 @@ public class Restaurant implements Writable {
     // EFFECTS: adds given table to tables
     public void addTableFromJson(Table t) {
         tables.add(t);
+        EventLog.getInstance().logEvent(new Event("Added " + name + " to " + this.name));
     }
 }
 
